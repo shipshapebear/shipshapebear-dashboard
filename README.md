@@ -2,10 +2,16 @@
 
 This dashboard template is built in from shadcn's next-template.
 
-## Usage
+## If you want to create your own template:
 
 ```bash
 npx create-next-app -e https://github.com/shadcn/next-template
+```
+
+## Clone this repo
+
+```bash
+git clone https://github.com/shipshapebear/next-dashboard.git
 ```
 
 ## Features
