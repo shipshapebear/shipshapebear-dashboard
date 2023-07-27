@@ -1,6 +1,6 @@
 # next-template
 
-A Next.js 13 template for building apps with Radix UI and Tailwind CSS.
+This dashboard template is built in from shadcn's next-template.
 
 ## Usage
 

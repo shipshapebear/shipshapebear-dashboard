@@ -3,7 +3,7 @@ export type SiteConfig = typeof siteConfig
 export const siteConfig = {
   name: "Shipshapebear dashboard template",
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    "This dashboard template is built in from shadcn's next-template.",
   mainNav: [
     {
       title: "Home",
