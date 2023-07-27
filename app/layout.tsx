@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
+import Sidebar from "@/components/side-bar"
+import Navbar from "@/components/nav-bar"
 
 export const metadata: Metadata = {
   title: {
@@ -34,17 +36,23 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <>
       <html lang="en" suppressHydrationWarning>
         <head />
+        <meta name="viewport" content="width=1024" />
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
+            "min-h-screen overflow-x-hidden bg-background font-sans antialiased",
             fontSans.variable
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <div className="flex-1">{children}</div>
-            </div>
+            <Sidebar />
+            <main className={cn("h-full min-h-screen w-full bg-background transition-all duration-200 ease-in-out")}>
+              <div className=" h-full min-h-screen">
+                <Navbar />
+                <div className='mt-[62px] p-3'>
+                  {children}
+                </div>
+              </div>
+            </main>
             <TailwindIndicator />
           </ThemeProvider>
         </body>
