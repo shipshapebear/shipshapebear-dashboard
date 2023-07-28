@@ -20,13 +20,12 @@ const Sidebar = () => {
                 toggled ? "w-[300px]"
                     : "w-[calc(40px+1.5rem)]")}>
                 <div className={cn('flex h-[62px] items-center p-3', toggled ? "justify-between" : "justify-center")}>
-                    <Link target="_blank"
+                    <Link
                         rel="noreferrer"
                         href="/"
                         className={cn("!hover:bg-none flex gap-3")}>
                         <Image alt='logo' src={SiteLogo} className='mx-auto block h-auto w-[30px]' /> {toggled && <span className='font-bold'>shipshapebear</span>}
                     </Link>
-
                     <button onClick={() => setToggled(!toggled)} className={cn("absolute right-[-9px] h-[20px] w-[20px]  rounded-full bg-accent outline-1")}>
                         <IoIosArrowBack className={cn("m-auto text-foreground", !toggled ? "rotate-180" : "rotate-[0]")} />
                         <span className='sr-only'>collapse sidebar</span>
@@ -35,17 +34,17 @@ const Sidebar = () => {
 
                 <ul className='p-3'>
                     {[
-                        { value: "Home", link: "/" },
+                        { value: "Dashboard", link: "/dashboard" },
                         { value: "About", link: "/about" },
                         { value: "Services", link: "/services" },
                         { value: "Payment", link: "/payment" }
-                    ].map((val) => (
+                    ].map((val, index) => (
                         <>
                             {!toggled ?
-                                <TooltipProvider disableHoverableContent delayDuration={300}>
+                                <TooltipProvider disableHoverableContent delayDuration={300} key={val.value}>
                                     <Tooltip>
                                         <TooltipTrigger asChild>
-                                            <li key={val.value} className={`cursor-pointer rounded-sm  hover:bg-accent hover:text-accent-foreground ${pathname === val.link ? "bg-accent" : ""}`}>
+                                            <li className={`cursor-pointer rounded-sm  hover:bg-accent hover:text-accent-foreground ${pathname === val.link ? "bg-accent" : ""}`}>
                                                 <Link href={val.link} className='flex items-center'>
                                                     <CiLink className={cn("mx-4 h-10 w-6", toggled ? "mx-4 inline-block " : "mx-auto block")} />
                                                     {toggled && <span>{val.value}</span>}
@@ -57,7 +56,7 @@ const Sidebar = () => {
                                         </TooltipContent>
                                     </Tooltip>
                                 </TooltipProvider> :
-                                <li key={val.value} className={`cursor-pointer rounded-sm  hover:bg-accent hover:text-accent-foreground ${pathname === val.link ? "bg-accent" : ""}`}>
+                                <li key={val.value + index} className={`cursor-pointer rounded-sm  hover:bg-accent hover:text-accent-foreground ${pathname === val.link ? "bg-accent" : ""}`}>
                                     <Link href={val.link} className='flex items-center'>
                                         <CiLink className={cn("mx-4 h-10 w-6", toggled ? "mx-4 inline-block " : "mx-auto block")} />
                                         {toggled && <span>{val.value}</span>}

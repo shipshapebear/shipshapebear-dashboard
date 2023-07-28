@@ -26,10 +26,14 @@ export const metadata: Metadata = {
 }
 
 interface RootLayoutProps {
+  dashboard: React.ReactNode
+  login: React.ReactNode
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children, dashboard, login }: RootLayoutProps) {
+  const user = true
+
   return (
     <>
       <html lang="en" suppressHydrationWarning>
@@ -37,12 +41,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <meta name="viewport" content="width=1024" />
         <body
           className={cn(
-            "min-h-screen overflow-x-hidden bg-background font-sans antialiased",
+            "bg-background font-sans antialiased",
             fontSans.variable
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="flex">
+            {user ? <div className="flex">
               <Sidebar />
               <div className="w-full flex-col">
                 <Navbar />
@@ -52,7 +56,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   </div>
                 </main>
               </div>
-            </div>
+            </div> : login}
             <TailwindIndicator />
           </ThemeProvider>
         </body>
