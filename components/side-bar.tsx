@@ -7,8 +7,6 @@ import { CiLink } from 'react-icons/ci'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { buttonVariants } from './ui/button'
-import { ScrollArea } from '@/components/ui/scroll-area'
 
 const Sidebar = () => {
     const [toggled, setToggled] = useState(true)
@@ -29,6 +27,7 @@ const Sidebar = () => {
                     </Link>
                     <button onClick={() => setToggled(!toggled)} className={cn("absolute right-[-9px] h-[20px] w-[20px]  rounded-full bg-accent outline-1")}>
                         <IoIosArrowBack className={cn("m-auto text-foreground", !toggled ? "rotate-180" : "rotate-[0]")} />
+                        <span className='sr-only'>collapse sidebar</span>
                     </button>
                 </div>
 
