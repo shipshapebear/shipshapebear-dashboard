@@ -47,7 +47,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <div className="w-full flex-col">
                 <Navbar />
                 <main className={cn("w-full bg-background transition-all duration-200 ease-in-out")}>
-                  <div className=' h-[200vh] overflow-x-hidden p-3'>
+                  <div className='h-full min-h-[100vh] overflow-x-hidden p-3'>
                     {children}
                   </div>
                 </main>

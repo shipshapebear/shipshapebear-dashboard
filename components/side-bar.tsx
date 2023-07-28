@@ -37,11 +37,12 @@ const Sidebar = () => {
                     {[
                         { value: "Home", link: "/" },
                         { value: "About", link: "/about" },
-                        { value: "Services", link: "/services" }
+                        { value: "Services", link: "/services" },
+                        { value: "Payment", link: "/payment" }
                     ].map((val) => (
                         <>
                             {!toggled ?
-                                <TooltipProvider>
+                                <TooltipProvider disableHoverableContent delayDuration={300}>
                                     <Tooltip>
                                         <TooltipTrigger asChild>
                                             <li key={val.value} className={`cursor-pointer rounded-sm  hover:bg-accent hover:text-accent-foreground ${pathname === val.link ? "bg-accent" : ""}`}>
