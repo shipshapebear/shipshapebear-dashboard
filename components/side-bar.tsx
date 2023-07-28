@@ -8,13 +8,15 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from './ui/button'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 const Sidebar = () => {
     const [toggled, setToggled] = useState(true)
     const pathname = usePathname()
 
     return (
-        <aside className={cn("fixed left-0 top-0 z-10 h-full min-h-[100dvh] border-r border-border bg-background", toggled ? "[&~main]:ml-[var(--aside-width)]" : "[&~main>.navbar]:ml-[var(--collapsed-aside-width)] [&~main]:ml-[var(--collapsed-aside-width)]")}>
+
+        <div className={cn("sticky left-0 top-0 z-20 h-full min-h-[100vh] border-r border-border bg-background", toggled ? "[&~main]:ml-[var(--aside-width)]" : " [&~main]:ml-[var(--collapsed-aside-width)]")}>
             <div className={cn("relative h-full transition-all duration-200 ease-in-out",
                 toggled ? "w-[300px]"
                     : "w-[calc(40px+1.5rem)]")}>
@@ -25,7 +27,7 @@ const Sidebar = () => {
                         className={cn("!hover:bg-none flex gap-3")}>
                         <Image alt='logo' src={SiteLogo} className='mx-auto block h-auto w-[30px]' /> {toggled && <span className='font-bold'>shipshapebear</span>}
                     </Link>
-                    <button onClick={() => setToggled(!toggled)} className={cn("absolute right-[-9px] h-[20px]  w-[20px] rounded-full bg-accent")}>
+                    <button onClick={() => setToggled(!toggled)} className={cn("absolute right-[-9px] h-[20px] w-[20px]  rounded-full bg-accent outline-1")}>
                         <IoIosArrowBack className={cn("m-auto text-foreground", !toggled ? "rotate-180" : "rotate-[0]")} />
                     </button>
                 </div>
@@ -45,7 +47,7 @@ const Sidebar = () => {
                     ))}
                 </ul>
             </div>
-        </aside>
+        </div>
     )
 }
 

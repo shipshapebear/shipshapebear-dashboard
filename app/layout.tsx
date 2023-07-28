@@ -44,15 +44,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Sidebar />
-            <main className={cn("h-full min-h-screen w-full bg-background transition-all duration-200 ease-in-out")}>
-              <div className=" h-full min-h-screen">
+            <div className="flex">
+              <Sidebar />
+              <div className="w-full flex-col">
                 <Navbar />
-                <div className='mt-[62px] p-3'>
-                  {children}
-                </div>
+                <main className={cn("w-full bg-background transition-all duration-200 ease-in-out")}>
+                  <div className=' h-[200vh] overflow-x-hidden p-3'>
+                    {children}
+                  </div>
+                </main>
               </div>
-            </main>
+            </div>
             <TailwindIndicator />
           </ThemeProvider>
         </body>
