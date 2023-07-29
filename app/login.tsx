@@ -1,7 +1,7 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import LoginForm from '../login-form'
-import { redirect } from 'next/navigation'
+import LoginForm from './login-form'
+
 
 
 export default async function Login() {
@@ -9,10 +9,7 @@ export default async function Login() {
 
 
     const { data: { session } } = await supabase.auth.getSession()
+    console.log(session)
 
-    if (session) {
-        redirect('/dashboard')
-    }
-
-    return <LoginForm session={session} />
+    return <LoginForm session={session}/>
 }
