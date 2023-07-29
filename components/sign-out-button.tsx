@@ -13,7 +13,8 @@ const SignOut = () => {
         router.refresh()
     }
     return (
-        <Button onClick={handleSignOut}>Sign Out</Button>
+
+        <button className='relative w-full flex cursor-default select-none items-center rounded-sm text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground ' onClick={handleSignOut}>Sign Out</button>
     )
 }
 

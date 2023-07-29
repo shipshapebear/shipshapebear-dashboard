@@ -20,12 +20,12 @@ const Layout = async ({ children }: any) => {
     if (!session) {
         redirect('/login')
     }
-    
+
     return (
         <div className="flex">
             <Sidebar />
             <div className="w-full flex-col">
-                <Navbar />
+                <Navbar session={session} />
                 <main className={cn("w-full bg-background transition-all duration-200 ease-in-out")}>
                     <div className='h-full min-h-[100vh] overflow-x-hidden p-3'>
                         {children}
