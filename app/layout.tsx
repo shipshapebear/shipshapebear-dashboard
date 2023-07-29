@@ -3,10 +3,7 @@ import { Metadata } from "next"
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
-import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
-import Sidebar from "@/components/side-bar"
-import Navbar from "@/components/nav-bar"
 
 export const metadata: Metadata = {
   title: {
@@ -26,37 +23,26 @@ export const metadata: Metadata = {
 }
 
 interface RootLayoutProps {
+  dashboard: React.ReactNode
+  login: React.ReactNode
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <>
-      <html lang="en" suppressHydrationWarning>
-        <head />
-        <meta name="viewport" content="width=1024" />
-        <body
-          className={cn(
-            "min-h-screen overflow-x-hidden bg-background font-sans antialiased",
-            fontSans.variable
-          )}
-        >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="flex">
-              <Sidebar />
-              <div className="w-full flex-col">
-                <Navbar />
-                <main className={cn("w-full bg-background transition-all duration-200 ease-in-out")}>
-                  <div className='h-full min-h-[100vh] overflow-x-hidden p-3'>
-                    {children}
-                  </div>
-                </main>
-              </div>
-            </div>
-            <TailwindIndicator />
-          </ThemeProvider>
-        </body>
-      </html>
-    </>
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <meta name="viewport" content="width=1024" />
+      <body
+        className={cn(
+          "bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider >
+      </body>
+    </html >
   )
 }

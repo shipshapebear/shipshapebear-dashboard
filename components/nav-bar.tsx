@@ -5,10 +5,12 @@ import { siteConfig } from '@/config/site'
 import Link from 'next/link'
 import { Icons } from './icons'
 import { buttonVariants } from './ui/button'
+import SignOut from './sign-out-button'
 
 const Navbar = () => {
     return (
         <nav className={cn("navbar sticky top-0 z-10 flex h-[62px] w-full justify-end overflow-hidden border-b  border-border bg-background p-3")}>
+            <SignOut />
             <Link
                 href={siteConfig.links.github}
                 target="_blank"

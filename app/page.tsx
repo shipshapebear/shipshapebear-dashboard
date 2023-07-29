@@ -20,9 +20,16 @@ export default function IndexPage() {
           target="_blank"
           rel="noreferrer"
           href={siteConfig.links.github}
-          className={buttonVariants({ variant: "default" })}
+          className={buttonVariants({ variant: "default", size: "sm" })}
         >
           GitHub
+        </Link>
+        <Link
+          rel="noreferrer"
+          href="/login"
+          className={buttonVariants({ variant: "secondary", size: "default" })}
+        >
+          Login
         </Link>
       </div>
     </section>
