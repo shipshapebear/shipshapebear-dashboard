@@ -14,7 +14,7 @@ const Sidebar = () => {
     const pathname = usePathname()
 
     return (
-        <div className={cn("sticky left-0 top-0 z-20 h-full min-h-[100vh] border-r border-border bg-background", toggled ? "[&~main]:ml-[var(--aside-width)]" : " [&~main]:ml-[var(--collapsed-aside-width)]")}>
+        <div className={cn("sticky left-0 top-0 z-20 h-full min-h-[100vh] border-r border-border bg-background")}>
             <div className={cn("relative h-full transition-all duration-200 ease-in-out",
                 toggled ? "w-[300px]"
                     : "w-[calc(40px+1.5rem)]")}>
