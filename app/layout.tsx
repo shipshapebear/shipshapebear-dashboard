@@ -46,17 +46,7 @@ export default function RootLayout({ children, dashboard, login }: RootLayoutPro
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {user ? <div className="flex">
-              <Sidebar />
-              <div className="w-full flex-col">
-                <Navbar />
-                <main className={cn("w-full bg-background transition-all duration-200 ease-in-out")}>
-                  <div className='h-full min-h-[100vh] overflow-x-hidden p-3'>
-                    {children}
-                  </div>
-                </main>
-              </div>
-            </div> : login}
+            {children}
             <TailwindIndicator />
           </ThemeProvider>
         </body>

@@ -24,6 +24,13 @@ export default function IndexPage() {
         >
           GitHub
         </Link>
+        <Link
+          rel="noreferrer"
+          href="/login"
+          className={buttonVariants({ variant: "default" })}
+        >
+          Login
+        </Link>
       </div>
     </section>
   )
