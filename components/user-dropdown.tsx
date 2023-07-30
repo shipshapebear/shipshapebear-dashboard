@@ -1,3 +1,4 @@
+"use client"
 import {
     Avatar,
     AvatarFallback,
@@ -14,11 +15,19 @@ import {
     DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import SignOut from "./sign-out-button"
 import { AiOutlineUser } from 'react-icons/ai'
+import { useRouter } from 'next/navigation'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
-export function UserDropdown({ session }) {
 
+export function UserDropdown({ session }: any) {
+    const router = useRouter()
+    const supabase = createClientComponentClient()
+
+    const handleSignOut = async () => {
+        await supabase.auth.signOut()
+        router.refresh()
+    }
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -46,8 +55,8 @@ export function UserDropdown({ session }) {
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                    <SignOut />
+                <DropdownMenuItem onClick={handleSignOut}>
+                    Sign out
                     <DropdownMenuShortcut>⇧⌘S</DropdownMenuShortcut>
                 </DropdownMenuItem>
             </DropdownMenuContent>

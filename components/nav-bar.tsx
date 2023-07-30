@@ -9,8 +9,7 @@ import UserDropdown from "@/components/user-dropdown"
 
 
 
-const Navbar = ({ session }) => {
-
+const Navbar = ({ session }: any) => {
     return (
         <nav className={cn("navbar sticky top-0 z-10 flex h-[62px] w-full justify-end overflow-hidden border-b  border-border bg-background p-3")}>
             <div className='flex items-center gap-2'>
@@ -30,7 +29,6 @@ const Navbar = ({ session }) => {
                     </div>
                 </Link>
                 <ThemeToggle />
-
                 <UserDropdown session={session} />
             </div>
         </nav>

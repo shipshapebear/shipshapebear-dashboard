@@ -19,25 +19,21 @@ export function Page() {
     const router = useRouter()
     const supabase = createClientComponentClient()
 
+    const [email, setEmail] = React.useState("")
+    const [password, setPassword] = React.useState("")
 
-    const [email, setEmail] = React.useState(null)
-    const [password, setPassword] = React.useState(null)
-
-
-
-    const handleSignIn = async (e) => {
+    const handleSignIn = async (e: any) => {
         e.preventDefault()
-
-
-        const res = await supabase.auth.signInWithPassword({
+        await supabase.auth.signInWithPassword({
             email,
             password,
         })
         router.refresh()
     }
 
-    const handleSignUp = async (e) => {
-        const res = await supabase.auth.signUp({
+    const handleSignUp = async (e: any) => {
+        e.preventDefault()
+        await supabase.auth.signUp({
             email,
             password,
             options: {
@@ -52,8 +48,8 @@ export function Page() {
 
 
     return (
-        <div className="flex items-center h-screen">
-            <Card className="w-[350px] mx-auto">
+        <div className="flex h-screen items-center">
+            <Card className="mx-auto w-[350px]">
                 <CardHeader>
                     <CardTitle>Login</CardTitle>
                     <CardDescription>Login crendentials</CardDescription>
@@ -72,7 +68,7 @@ export function Page() {
                         </div>
                     </form>
                 </CardContent>
-                <CardFooter className="w-full flex-1 justify-center gap-y-3 flex-col">
+                <CardFooter className="w-full flex-1 flex-col justify-center gap-y-3">
                     <Button className="w-full" type="submit" onClick={(e) => handleSignIn(e)}>Login</Button>
                     <Button className="w-full" type="button" variant="outline" onClick={(e) => handleSignUp(e)}>Sign up</Button>
                 </CardFooter>
