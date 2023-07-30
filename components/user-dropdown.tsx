@@ -17,8 +17,7 @@ import {
 import SignOut from "./sign-out-button"
 import { AiOutlineUser } from 'react-icons/ai'
 
-export function UserDropdown({ session }) {
-
+export function UserDropdown({ session }: any) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -47,8 +46,10 @@ export function UserDropdown({ session }) {
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                    <SignOut />
-                    <DropdownMenuShortcut>⇧⌘S</DropdownMenuShortcut>
+                    <SignOut>
+                        Sign out
+                        <DropdownMenuShortcut>⇧⌘S</DropdownMenuShortcut>
+                    </SignOut>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
