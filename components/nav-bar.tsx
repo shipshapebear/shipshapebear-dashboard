@@ -29,7 +29,6 @@ const Navbar = ({ session }: any) => {
                     </div>
                 </Link>
                 <ThemeToggle />
-
                 <UserDropdown session={session} />
             </div>
         </nav>
