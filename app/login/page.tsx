@@ -14,5 +14,5 @@ export default async function Login() {
         redirect('/dashboard')
     }
 
-    return <LoginForm session={session} />
+    return <LoginForm />
 }

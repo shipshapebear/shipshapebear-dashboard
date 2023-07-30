@@ -15,7 +15,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useRouter } from 'next/navigation'
 
 
-export function Page({ session }: any) {
+export function Page() {
     const router = useRouter()
     const supabase = createClientComponentClient()
 
@@ -49,10 +49,6 @@ export function Page({ session }: any) {
         router.refresh()
     }
 
-    const handleSignOut = async () => {
-        await supabase.auth.signOut()
-        router.refresh()
-    }
 
 
     return (
@@ -76,10 +72,9 @@ export function Page({ session }: any) {
                         </div>
                     </form>
                 </CardContent>
-                <CardFooter className="w-full flex-1 justify-center gap-x-3">
-                    {session && <Button variant="outline" className="w-full" onClick={(e) => handleSignOut(e)}>Logout</Button>}
-                    <Button className="w-full" type="button" onClick={(e) => handleSignIn(e)}>Login</Button>
-                    <Button className="w-full" type="button" onClick={(e) => handleSignUp(e)}>Sign up</Button>
+                <CardFooter className="w-full flex-1 justify-center gap-y-3 flex-col">
+                    <Button className="w-full" type="submit" onClick={(e) => handleSignIn(e)}>Login</Button>
+                    <Button className="w-full" type="button" variant="outline" onClick={(e) => handleSignUp(e)}>Sign up</Button>
                 </CardFooter>
             </Card>
         </div>
