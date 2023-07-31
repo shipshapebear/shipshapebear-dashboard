@@ -3,6 +3,10 @@ import { useCallback, useEffect, useState } from 'react'
 import UserAvatar from './user-avatar'
 import { Database } from '@/types/database'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Label } from '@/components/ui/Label'
 
 export default function AccountForm({ session }: { session: Session | null }) {
     const supabase = createClientComponentClient<Database>()
@@ -76,7 +80,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
     }
 
     return (
-        <div className="form-widget">
+        <Card className="p-10">
             <UserAvatar
                 uid={user?.id}
                 url={avatar_url}
@@ -86,55 +90,55 @@ export default function AccountForm({ session }: { session: Session | null }) {
                     updateProfile({ fullname, username, website, avatar_url: url })
                 }}
             />
-            <div>
-                <label htmlFor="email">Email</label>
-                <input id="email" type="text" value={session?.user.email} disabled />
-            </div>
-            <div>
-                <label htmlFor="fullName">Full Name</label>
-                <input
-                    id="fullName"
-                    type="text"
-                    value={fullname || ''}
-                    onChange={(e) => setFullname(e.target.value)}
-                />
-            </div>
-            <div>
-                <label htmlFor="username">Username</label>
-                <input
-                    id="username"
-                    type="text"
-                    value={username || ''}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
-            <div>
-                <label htmlFor="website">Website</label>
-                <input
-                    id="website"
-                    type="url"
-                    value={website || ''}
-                    onChange={(e) => setWebsite(e.target.value)}
-                />
+            <div className='[&>*+*]:mt-4'>
+                <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input id="email" type="text" value={session?.user.email} disabled />
+                </div>
+                <div>
+                    <Label htmlFor="fullName">Full Name</Label>
+                    <Input
+                        id="fullName"
+                        type="text"
+                        value={fullname || ''}
+                        onChange={(e) => setFullname(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <Label htmlFor="username">Username</Label>
+                    <Input
+                        id="username"
+                        type="text"
+                        value={username || ''}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <Label htmlFor="website">Website</Label>
+                    <Input
+                        id="website"
+                        type="url"
+                        value={website || ''}
+                        onChange={(e) => setWebsite(e.target.value)}
+                    />
+                </div>
             </div>
 
-            <div>
-                <button
-                    className="button primary block"
+            <div className='flex justify-end mt-10 gap-3'>
+                <form action="/auth/signout" method="post">
+                    <Button className="Button block" type="submit" variant="outline">
+                        Sign out
+                    </Button>
+                </form>
+                <Button
+                    className="Button primary block"
                     onClick={() => updateProfile({ fullname, username, website, avatar_url })}
                     disabled={loading}
                 >
                     {loading ? 'Loading ...' : 'Update'}
-                </button>
-            </div>
+                </Button>
 
-            <div>
-                <form action="/auth/signout" method="post">
-                    <button className="button block" type="submit">
-                        Sign out
-                    </button>
-                </form>
             </div>
-        </div>
+        </Card>
     )
 }

@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from 'react'
 import { Database } from '@/types/database'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import Image from 'next/image'
 import { AvatarImage, Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { AiOutlineUser } from 'react-icons/ai'
 import useImageDownloader from '@/lib/utils/useImageDownloader'
+import { buttonVariants } from '@/components/ui/button'
+import { BiUpload } from 'react-icons/bi'
 
 
 type Profiles = Database['public']['Tables']['profile']['Row']
@@ -23,7 +24,7 @@ export default function UserAvatar({
 }) {
     const supabase = createClientComponentClient<Database>()
     const [uploading, setUploading] = useState(false)
-    const imageUrl = useImageDownloader(url, supabase, "avatars")
+    const imageUrl: any = useImageDownloader(url, supabase, "avatars")
 
     const uploadAvatar: React.ChangeEventHandler<HTMLInputElement> = async (event) => {
         try {
@@ -54,25 +55,30 @@ export default function UserAvatar({
 
     return (
         <div>
-            <Avatar className="h-20 w-20">
-                <AvatarImage src={imageUrl} alt="user image" />
-                <AvatarFallback><AiOutlineUser /></AvatarFallback>
-            </Avatar>
-            <div style={{ width: size }}>
-                <label className="button primary block" htmlFor="single">
-                    Upload photo
-                </label>
-                <input
-                    style={{
-                        visibility: 'hidden',
-                        position: 'absolute',
-                    }}
-                    type="file"
-                    id="single"
-                    accept="image/*"
-                    onChange={uploadAvatar}
-                    disabled={uploading}
-                />
+            <div className='flex flex-col items-center gap-4'>
+                <Avatar className="mx-auto h-36 w-36">
+                    <AvatarImage src={imageUrl} alt="user image" />
+                    <AvatarFallback><AiOutlineUser /></AvatarFallback>
+                </Avatar>
+
+
+
+                <div className={buttonVariants({ variant: 'default' })}>
+                    <label className="button primary inline-flex items-center gap-x-2" htmlFor="single">
+                        {imageUrl ? "Update photo" : "Upload photo"}<BiUpload className='h-[20px] w-[20px]' />
+                    </label>
+                    <input
+                        style={{
+                            visibility: 'hidden',
+                            position: 'absolute',
+                        }}
+                        type="file"
+                        id="single"
+                        accept="image/*"
+                        onChange={uploadAvatar}
+                        disabled={uploading}
+                    />
+                </div>
             </div>
         </div>
     )
