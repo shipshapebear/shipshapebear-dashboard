@@ -1,70 +1,38 @@
 'use client'
-import { useCallback, useEffect, useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import UserAvatar from './user-avatar'
 import { Database } from '@/types/database'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Label } from '@/components/ui/Label'
+import { Label } from '@/components/ui/label'
+import useProfileLoader from '@/lib/utils/useProfileLoader'
 
 export default function AccountForm({ session }: { session: Session | null }) {
     const supabase = createClientComponentClient<Database>()
-    const [loading, setLoading] = useState(true)
-    const [fullname, setFullname] = useState<string | null>(null)
-    const [username, setUsername] = useState<string | null>(null)
-    const [website, setWebsite] = useState<string | null>(null)
     const [avatar_url, setAvatarUrl] = useState<string | null>(null)
     const user = session?.user
+    const { loading, profileData, getProfile } = useProfileLoader(user, supabase)
+    const [isLoading, setIsLoading] = useState(false)
 
-    const getProfile = useCallback(async () => {
-        try {
-            setLoading(true)
-
-            let { data, error, status } = await supabase
-                .from('profile')
-                .select(`display_name, username, website, avatar_url`)
-                .eq('id', user?.id)
-                .single()
-
-            if (error && status !== 406) {
-                throw error
-            }
-
-            if (data) {
-                setFullname(data.display_name)
-                setUsername(data.username)
-                setWebsite(data.website)
-                setAvatarUrl(data.avatar_url)
-            }
-        } catch (error) {
-            console.log(error)
-            //alert('Error loading user data!')
-        } finally {
-            setLoading(false)
-        }
-    }, [user, supabase])
 
     useEffect(() => {
         getProfile()
     }, [user, getProfile])
 
     async function updateProfile({
+        display_name,
         username,
         website,
-        avatar_url,
-    }: {
-        username: string | null
-        fullname: string | null
-        website: string | null
-        avatar_url: string | null
-    }) {
+        avatar_url }: any
+    ) {
         try {
-            setLoading(true)
+            setIsLoading(true)
 
             let { error } = await supabase.from('profile').upsert({
                 id: user?.id as string,
-                display_name: fullname,
+                display_name,
                 username,
                 website,
                 avatar_url,
@@ -75,19 +43,21 @@ export default function AccountForm({ session }: { session: Session | null }) {
         } catch (error) {
             alert('Error updating the data!')
         } finally {
-            setLoading(false)
+            setIsLoading(false)
         }
     }
+
+    const display_name = useRef<HTMLInputElement>(null)
+    const username = useRef<HTMLInputElement>(null)
+    const website = useRef<HTMLInputElement>(null)
 
     return (
         <Card className="p-10">
             <UserAvatar
                 uid={user?.id}
-                url={avatar_url}
-                size={150}
+                url={profileData?.avatar_url}
                 onUpload={(url) => {
                     setAvatarUrl(url)
-                    updateProfile({ fullname, username, website, avatar_url: url })
                 }}
             />
             <div className='[&>*+*]:mt-4'>
@@ -96,12 +66,12 @@ export default function AccountForm({ session }: { session: Session | null }) {
                     <Input id="email" type="text" value={session?.user.email} disabled />
                 </div>
                 <div>
-                    <Label htmlFor="fullName">Full Name</Label>
+                    <Label htmlFor="displayName">Full Name</Label>
                     <Input
-                        id="fullName"
+                        id="displayName"
                         type="text"
-                        value={fullname || ''}
-                        onChange={(e) => setFullname(e.target.value)}
+                        defaultValue={profileData?.display_name || ''}
+                        ref={display_name}
                     />
                 </div>
                 <div>
@@ -109,8 +79,8 @@ export default function AccountForm({ session }: { session: Session | null }) {
                     <Input
                         id="username"
                         type="text"
-                        value={username || ''}
-                        onChange={(e) => setUsername(e.target.value)}
+                        defaultValue={profileData?.username || ''}
+                        ref={username}
                     />
                 </div>
                 <div>
@@ -118,13 +88,13 @@ export default function AccountForm({ session }: { session: Session | null }) {
                     <Input
                         id="website"
                         type="url"
-                        value={website || ''}
-                        onChange={(e) => setWebsite(e.target.value)}
+                        defaultValue={profileData?.website || ''}
+                        ref={website}
                     />
                 </div>
             </div>
 
-            <div className='flex justify-end mt-10 gap-3'>
+            <div className='mt-10 flex justify-end gap-3'>
                 <form action="/auth/signout" method="post">
                     <Button className="Button block" type="submit" variant="outline">
                         Sign out
@@ -132,12 +102,11 @@ export default function AccountForm({ session }: { session: Session | null }) {
                 </form>
                 <Button
                     className="Button primary block"
-                    onClick={() => updateProfile({ fullname, username, website, avatar_url })}
+                    onClick={() => updateProfile({ display_name: display_name.current?.value, username: username.current?.value, website: website.current?.value, avatar_url: avatar_url })}
                     disabled={loading}
                 >
-                    {loading ? 'Loading ...' : 'Update'}
+                    {isLoading ? 'Loading ...' : 'Update'}
                 </Button>
-
             </div>
         </Card>
     )

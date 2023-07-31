@@ -20,7 +20,7 @@ import { AiOutlineUser } from 'react-icons/ai'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Link from "next/link"
-import useProfileLoader from "@/lib/utils/get-profile"
+import useProfileLoader from "@/lib/utils/useProfileLoader"
 import useImageDownloader from "@/lib/utils/useImageDownloader"
 
 export function UserDropdown({ session }: any) {

@@ -14,17 +14,16 @@ type Profiles = Database['public']['Tables']['profile']['Row']
 export default function UserAvatar({
     uid,
     url,
-    size,
     onUpload,
 }: {
     uid?: string
     url: Profiles['avatar_url']
-    size: number
     onUpload: (url: string) => void
 }) {
     const supabase = createClientComponentClient<Database>()
     const [uploading, setUploading] = useState(false)
     const imageUrl: any = useImageDownloader(url, supabase, "avatars")
+    const [imagePreview, setImagePreview] = useState(null);
 
     const uploadAvatar: React.ChangeEventHandler<HTMLInputElement> = async (event) => {
         try {
@@ -35,9 +34,16 @@ export default function UserAvatar({
             }
 
             const file = event.target.files[0]
+            if (file) {
+                const reader: any = new FileReader();
+                reader.readAsDataURL(file);
+
+                reader.onloadend = () => {
+                    setImagePreview(reader.result);
+                };
+            }
             const fileExt = file.name.split('.').pop()
             const filePath = `${uid}-${Math.random()}.${fileExt}`
-
 
             let { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file)
 
@@ -56,12 +62,14 @@ export default function UserAvatar({
     return (
         <div>
             <div className='flex flex-col items-center gap-4'>
-                <Avatar className="mx-auto h-36 w-36">
+                {imagePreview ? <Avatar className="mx-auto h-36 w-36">
+                    <AvatarImage src={imagePreview} alt="user image" />
+                    <AvatarFallback><AiOutlineUser /></AvatarFallback>
+                </Avatar> : <Avatar className="mx-auto h-36 w-36">
                     <AvatarImage src={imageUrl} alt="user image" />
                     <AvatarFallback><AiOutlineUser /></AvatarFallback>
                 </Avatar>
-
-
+                }
 
                 <div className={buttonVariants({ variant: 'default' })}>
                     <label className="button primary inline-flex items-center gap-x-2" htmlFor="single">
