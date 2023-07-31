@@ -63,15 +63,13 @@ export default function UserAvatar({
     return (
         <div>
             <div className='flex flex-col items-center gap-4'>
-                {imagePreview ? <Avatar className="mx-auto h-36 w-36">
-                    <AvatarImage src={imagePreview} alt="user image" />
-                    <AvatarFallback><AiOutlineUser /></AvatarFallback>
-                </Avatar> : <Avatar className="mx-auto h-36 w-36">
-                    <AvatarImage src={imageUrl} alt="user image" />
+
+                <Avatar className="mx-auto h-36 w-36">
+                    {imagePreview ? <AvatarImage src={imagePreview} alt="preview image" /> :
+                        <AvatarImage src={imageUrl} alt="user image" />
+                    }
                     <AvatarFallback><AiOutlineUser /></AvatarFallback>
                 </Avatar>
-                }
-
                 <div className={buttonVariants({ variant: 'default' })}>
                     <label className="button primary inline-flex items-center gap-x-2" htmlFor="single">
                         {imageUrl ? "Update photo" : "Upload photo"}<BiUpload className='h-[20px] w-[20px]' />
