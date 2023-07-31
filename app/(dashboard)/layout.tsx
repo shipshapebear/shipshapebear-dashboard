@@ -6,10 +6,11 @@ import { cn } from '@/lib/utils'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
+import { Database } from '@/types/database'
 
 const Layout = async ({ children }: any) => {
 
-    const supabase = createServerComponentClient({
+    const supabase = createServerComponentClient<Database>({
         cookies
     })
 

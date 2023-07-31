@@ -11,7 +11,7 @@ npx create-next-app -e https://github.com/shadcn/next-template
 ## Clone this repo
 
 ```bash
-git clone https://github.com/shipshapebear/next-dashboard.git
+git clone https://github.com/shipshapebear/shipshapebear-dashboard.git
 ```
 
 ## Features
