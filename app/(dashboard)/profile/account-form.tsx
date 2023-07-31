@@ -12,9 +12,9 @@ import { useToast } from '@/lib/utils/useToast'
 
 export default function AccountForm({ session }: { session: Session | null }) {
     const supabase = createClientComponentClient<Database>()
-    const [avatar_url, setAvatarUrl] = useState<string | null>(null)
     const user = session?.user
     const { loading, profileData, getProfile } = useProfileLoader(user, supabase)
+    const [avatar_url, setAvatarUrl] = useState<string | null>(profileData?.avatar_url)
     const [isLoading, setIsLoading] = useState(false)
     const { toast } = useToast()
 
@@ -54,7 +54,6 @@ export default function AccountForm({ session }: { session: Session | null }) {
     const display_name = useRef<HTMLInputElement>(null)
     const username = useRef<HTMLInputElement>(null)
     const website = useRef<HTMLInputElement>(null)
-
 
     return (
         <Card className="p-10">
