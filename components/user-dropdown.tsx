@@ -38,7 +38,7 @@ export function UserDropdown({ session }: any) {
         getProfile()
     }, [session, supabase, getProfile])
 
-    const imageUrl = useImageDownloader(profileData?.avatar_url, supabase, "avatars")
+    const imageUrl: any = useImageDownloader(profileData?.avatar_url, supabase, "avatars")
 
     return (
         <DropdownMenu>
