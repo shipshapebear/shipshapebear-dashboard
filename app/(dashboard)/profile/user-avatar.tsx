@@ -8,7 +8,6 @@ import useImageDownloader from '@/lib/utils/useImageDownloader'
 import { buttonVariants } from '@/components/ui/button'
 import { BiUpload } from 'react-icons/bi'
 
-
 type Profiles = Database['public']['Tables']['profile']['Row']
 
 export default function UserAvatar({
@@ -25,6 +24,8 @@ export default function UserAvatar({
     const imageUrl: any = useImageDownloader(url, supabase, "avatars")
     const [imagePreview, setImagePreview] = useState(null);
 
+    console.log(imageUrl)
+
     const uploadAvatar: React.ChangeEventHandler<HTMLInputElement> = async (event) => {
         try {
             setUploading(true)
@@ -34,14 +35,6 @@ export default function UserAvatar({
             }
 
             const file = event.target.files[0]
-            if (file) {
-                const reader: any = new FileReader();
-                reader.readAsDataURL(file);
-
-                reader.onloadend = () => {
-                    setImagePreview(reader.result);
-                };
-            }
             const fileExt = file.name.split('.').pop()
             const filePath = `${uid}-${Math.random()}.${fileExt}`
 
@@ -52,6 +45,14 @@ export default function UserAvatar({
             }
 
             onUpload(filePath)
+            if (file) {
+                const reader: any = new FileReader();
+                reader.readAsDataURL(file);
+
+                reader.onloadend = () => {
+                    setImagePreview(reader.result);
+                };
+            }
         } catch (error) {
             alert('Error uploading avatar!')
         } finally {

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import useProfileLoader from '@/lib/utils/useProfileLoader'
+import { useToast } from '@/lib/utils/useToast'
 
 export default function AccountForm({ session }: { session: Session | null }) {
     const supabase = createClientComponentClient<Database>()
@@ -15,7 +16,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
     const user = session?.user
     const { loading, profileData, getProfile } = useProfileLoader(user, supabase)
     const [isLoading, setIsLoading] = useState(false)
-
+    const { toast } = useToast()
 
     useEffect(() => {
         getProfile()
@@ -39,7 +40,10 @@ export default function AccountForm({ session }: { session: Session | null }) {
                 updated_at: new Date().toISOString(),
             })
             if (error) throw error
-            alert('Profile updated!')
+            toast({
+                title: "Success",
+                description: "Your profile is successsfully updated."
+            })
         } catch (error) {
             alert('Error updating the data!')
         } finally {
@@ -50,6 +54,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
     const display_name = useRef<HTMLInputElement>(null)
     const username = useRef<HTMLInputElement>(null)
     const website = useRef<HTMLInputElement>(null)
+
 
     return (
         <Card className="p-10">
@@ -103,9 +108,9 @@ export default function AccountForm({ session }: { session: Session | null }) {
                 <Button
                     className="Button primary block"
                     onClick={() => updateProfile({ display_name: display_name.current?.value, username: username.current?.value, website: website.current?.value, avatar_url: avatar_url })}
-                    disabled={loading}
+                    disabled={isLoading}
                 >
-                    {isLoading ? 'Loading ...' : 'Update'}
+                    {isLoading ? 'Loading' : 'Update'}
                 </Button>
             </div>
         </Card>
