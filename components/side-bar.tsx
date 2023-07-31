@@ -36,13 +36,14 @@ const Sidebar = () => {
                             { value: "Dashboard", link: "/dashboard" },
                             { value: "About", link: "/about" },
                             { value: "Services", link: "/services" },
-                            { value: "Payment", link: "/payment" }
+                            { value: "Payment", link: "/payment" },
+                            { value: "Profile", link: "/profile" }
                         ].map((val) => (
                             <li key={val.value}>
                                 <Tooltip>
                                     <TooltipTrigger asChild>
                                         <div className={`cursor-pointer rounded-sm  hover:bg-accent hover:text-accent-foreground ${pathname === val.link ? "bg-accent" : ""}`}>
-                                            <Link href={val.link} className='flex items-center'>
+                                            <Link href={val.link} className='flex select-none items-center'>
                                                 <CiLink className={cn("mx-4 h-10 w-6", toggled ? "mx-4 inline-block " : "mx-auto block")} />
                                                 {toggled && <span>{val.value}</span>}
                                             </Link>
