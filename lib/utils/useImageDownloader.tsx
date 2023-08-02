@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 
 
-function useImageDownloader(url: string | null, supabase: any, bucketName: string) {
+function useImageDownloader(url: string | null | undefined, supabase: any, bucketName: string) {
     const [imageUrl, setImageUrl] = useState<string | null>(null);
-
     useEffect(() => {
         async function downloadImage(path: string) {
             try {

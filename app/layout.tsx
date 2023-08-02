@@ -5,6 +5,9 @@ import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
+import SupabaseProvider from "@/context/SupabaseProvider"
+import SessionProvider from "@/context/SessionProvider"
+import { createClient } from "@/lib/supabase-server"
 
 export const metadata: Metadata = {
   title: {
@@ -30,6 +33,11 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
+
+  const supabase = createClient()
+  const { data: { session }, } = await supabase.auth.getSession();
+
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
@@ -40,10 +48,14 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           fontSans.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-          <Toaster />
-        </ThemeProvider >
+        <SupabaseProvider>
+          <SessionProvider serverSession={session}>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+              <Toaster />
+            </ThemeProvider >
+          </SessionProvider>
+        </SupabaseProvider>
       </body>
     </html >
   )

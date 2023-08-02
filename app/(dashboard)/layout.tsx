@@ -3,16 +3,12 @@ import { TailwindIndicator } from "@/components/tailwind-indicator"
 import Sidebar from "@/components/side-bar"
 import Navbar from "@/components/nav-bar"
 import { cn } from '@/lib/utils'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
-import { Database } from '@/types/database'
+import { createClient } from '@/lib/supabase-server'
 
 const Layout = async ({ children }: any) => {
 
-    const supabase = createServerComponentClient<Database>({
-        cookies
-    })
+    const supabase = createClient()
 
     const {
         data: { session },

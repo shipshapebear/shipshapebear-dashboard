@@ -1,26 +1,21 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 import UserAvatar from './user-avatar'
-import { Database } from '@/types/database'
-import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { Session } from '@supabase/auth-helpers-nextjs'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
-import useProfileLoader from '@/lib/utils/useProfileLoader'
 import { useToast } from '@/lib/utils/useToast'
+import { useAuth } from '@/context/SessionProvider'
+import { useSupabase } from '@/context/SupabaseProvider'
 
 export default function AccountForm({ session }: { session: Session | null }) {
-    const supabase = createClientComponentClient<Database>()
-    const user = session?.user
-    const { loading, profileData, getProfile } = useProfileLoader(user, supabase)
-    const [avatar_url, setAvatarUrl] = useState<string | null>(profileData?.avatar_url)
+    const { supabase } = useSupabase()
     const [isLoading, setIsLoading] = useState(false)
     const { toast } = useToast()
-
-    useEffect(() => {
-        getProfile()
-    }, [user, getProfile])
+    const { user } = useAuth()
+    const [avatar_url, setAvatarUrl] = useState<string | null | undefined>(user?.avatar_url)
 
     async function updateProfile({
         display_name,
@@ -58,8 +53,8 @@ export default function AccountForm({ session }: { session: Session | null }) {
     return (
         <Card className="p-10">
             <UserAvatar
-                uid={user?.id}
-                url={profileData?.avatar_url}
+                user={user}
+                supabase={supabase}
                 onUpload={(url) => {
                     setAvatarUrl(url)
                 }}
@@ -74,7 +69,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
                     <Input
                         id="displayName"
                         type="text"
-                        defaultValue={profileData?.display_name || ''}
+                        defaultValue={user?.display_name || ''}
                         ref={display_name}
                     />
                 </div>
@@ -83,7 +78,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
                     <Input
                         id="username"
                         type="text"
-                        defaultValue={profileData?.username || ''}
+                        defaultValue={user?.username || ''}
                         ref={username}
                     />
                 </div>
@@ -92,7 +87,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
                     <Input
                         id="website"
                         type="url"
-                        defaultValue={profileData?.website || ''}
+                        defaultValue={user?.website || ''}
                         ref={website}
                     />
                 </div>

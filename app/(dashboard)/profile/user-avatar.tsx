@@ -1,30 +1,27 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Database } from '@/types/database'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { AvatarImage, Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { AiOutlineUser } from 'react-icons/ai'
 import useImageDownloader from '@/lib/utils/useImageDownloader'
 import { buttonVariants } from '@/components/ui/button'
 import { BiUpload } from 'react-icons/bi'
 
+
 type Profiles = Database['public']['Tables']['profile']['Row']
 
 export default function UserAvatar({
-    uid,
-    url,
+    user,
     onUpload,
+    supabase
 }: {
-    uid?: string
-    url: Profiles['avatar_url']
+    user: Profiles | any
     onUpload: (url: string) => void
+    supabase: any
 }) {
-    const supabase = createClientComponentClient<Database>()
     const [uploading, setUploading] = useState(false)
-    const imageUrl: any = useImageDownloader(url, supabase, "avatars")
+    const imageUrl: any = useImageDownloader(user?.avatar_url, supabase, "avatars")
     const [imagePreview, setImagePreview] = useState(null);
-
-    console.log(imageUrl)
 
     const uploadAvatar: React.ChangeEventHandler<HTMLInputElement> = async (event) => {
         try {
@@ -36,7 +33,7 @@ export default function UserAvatar({
 
             const file = event.target.files[0]
             const fileExt = file.name.split('.').pop()
-            const filePath = `${uid}-${Math.random()}.${fileExt}`
+            const filePath = `${user.id}-${Math.random()}.${fileExt}`
 
             let { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file)
 
@@ -65,7 +62,8 @@ export default function UserAvatar({
             <div className='flex flex-col items-center gap-4'>
 
                 <Avatar className="mx-auto h-36 w-36">
-                    {imagePreview ? <AvatarImage src={imagePreview} alt="preview image" /> :
+                    {imagePreview ?
+                        <AvatarImage src={imagePreview} alt="preview image" /> :
                         <AvatarImage src={imageUrl} alt="user image" />
                     }
                     <AvatarFallback><AiOutlineUser /></AvatarFallback>
