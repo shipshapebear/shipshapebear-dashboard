@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useRouter } from 'next/navigation'
+import { useAuth } from "@/context/SessionProvider"
 
 
 export function Page() {
@@ -22,14 +23,7 @@ export function Page() {
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
 
-    const handleSignIn = async (e: any) => {
-        e.preventDefault()
-        await supabase.auth.signInWithPassword({
-            email,
-            password,
-        })
-        router.refresh()
-    }
+    const { signInWithEmail } = useAuth()
 
     const handleSignUp = async (e: any) => {
         e.preventDefault()
@@ -40,12 +34,8 @@ export function Page() {
                 emailRedirectTo: `${location.origin}/auth/callback`,
             },
         })
-
-        console.log(email, password)
         router.refresh()
     }
-
-
 
     return (
         <div className="flex h-screen items-center">
@@ -69,7 +59,7 @@ export function Page() {
                     </form>
                 </CardContent>
                 <CardFooter className="w-full flex-1 flex-col justify-center gap-y-3">
-                    <Button className="w-full" type="submit" onClick={(e) => handleSignIn(e)}>Login</Button>
+                    <Button className="w-full" type="submit" onClick={() => signInWithEmail(email, password)}>Login</Button>
                     <Button className="w-full" type="button" variant="outline" onClick={(e) => handleSignUp(e)}>Sign up</Button>
                 </CardFooter>
             </Card>

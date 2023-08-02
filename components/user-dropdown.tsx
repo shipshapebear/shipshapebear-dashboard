@@ -20,25 +20,14 @@ import { AiOutlineUser } from 'react-icons/ai'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Link from "next/link"
-import useProfileLoader from "@/lib/utils/get-profile"
 import useImageDownloader from "@/lib/utils/useImageDownloader"
+import { useAuth } from "@/context/SessionProvider"
+import { useSupabase } from "@/context/SupabaseProvider"
 
 export function UserDropdown({ session }: any) {
-    const router = useRouter()
-    const supabase = createClientComponentClient()
-
-    const { profileData, getProfile } = useProfileLoader(session.user, supabase)
-
-    const handleSignOut = async () => {
-        await supabase.auth.signOut()
-        router.refresh()
-    }
-
-    useEffect(() => {
-        getProfile()
-    }, [session, supabase, getProfile])
-
-    const imageUrl: any = useImageDownloader(profileData?.avatar_url, supabase, "avatars")
+    const { user, signOut } = useAuth()
+    const { supabase } = useSupabase()
+    const imageUrl: any = useImageDownloader(user?.avatar_url, supabase, "avatars")
 
     return (
         <DropdownMenu>
@@ -53,9 +42,9 @@ export function UserDropdown({ session }: any) {
             <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">{profileData?.display_name || "Email"}</p>
+                        <p className="text-sm font-medium leading-none">{user?.display_name || "Email"}</p>
                         <p className="text-xs leading-none text-muted-foreground">
-                            {session.user?.email}
+                            {session?.user?.email}
                         </p>
                     </div>
                 </DropdownMenuLabel>
@@ -69,7 +58,7 @@ export function UserDropdown({ session }: any) {
                     </Link>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut}>
+                <DropdownMenuItem onClick={signOut}>
                     Sign out
                     <DropdownMenuShortcut>⇧⌘S</DropdownMenuShortcut>
                 </DropdownMenuItem>
