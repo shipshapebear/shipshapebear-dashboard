@@ -27,7 +27,7 @@ export function UserDropdown({ session }: any) {
     const router = useRouter()
     const supabase = createClientComponentClient()
 
-    const { profileData, getProfile } = useProfileLoader(session.user, supabase)
+    const { profileData, getProfile } = useProfileLoader(session?.user, supabase)
 
     const handleSignOut = async () => {
         await supabase.auth.signOut()
@@ -55,7 +55,7 @@ export function UserDropdown({ session }: any) {
                     <div className="flex flex-col space-y-1">
                         <p className="text-sm font-medium leading-none">{profileData?.display_name || "Email"}</p>
                         <p className="text-xs leading-none text-muted-foreground">
-                            {session.user?.email}
+                            {session?.user?.email}
                         </p>
                     </div>
                 </DropdownMenuLabel>
