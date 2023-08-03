@@ -1,6 +1,5 @@
+"use client"
 import { useEffect, useState } from 'react';
-
-
 function useImageDownloader(url: string | null | undefined, supabase: any, bucketName: string) {
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     useEffect(() => {

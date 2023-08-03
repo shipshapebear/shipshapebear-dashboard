@@ -36,7 +36,7 @@ const Sidebar = () => {
                             { value: "Dashboard", link: "/dashboard" },
                             { value: "About", link: "/about" },
                             { value: "Services", link: "/services" },
-                            { value: "Payment", link: "/payment" },
+                            { value: "Users", link: "/users" },
                             { value: "Profile", link: "/profile" }
                         ].map((val) => (
                             <li key={val.value}>

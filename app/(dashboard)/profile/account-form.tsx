@@ -10,7 +10,7 @@ import { useToast } from '@/lib/utils/useToast'
 import { useAuth } from '@/context/SessionProvider'
 import { useSupabase } from '@/context/SupabaseProvider'
 
-export default function AccountForm({ session }: { session: Session | null }) {
+export default function AccountForm() {
     const { supabase } = useSupabase()
     const [isLoading, setIsLoading] = useState(false)
     const { toast } = useToast()
@@ -62,7 +62,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
             <div className='[&>*+*]:mt-4'>
                 <div>
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="text" value={session?.user.email} disabled />
+                    <Input id="email" type="text" value={user?.session?.user.email} disabled />
                 </div>
                 <div>
                     <Label htmlFor="displayName">Full Name</Label>

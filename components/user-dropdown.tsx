@@ -5,7 +5,6 @@ import {
     AvatarImage,
 } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { useEffect } from "react"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -17,14 +16,12 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { AiOutlineUser } from 'react-icons/ai'
-import { useRouter } from 'next/navigation'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Link from "next/link"
 import useImageDownloader from "@/lib/utils/useImageDownloader"
 import { useAuth } from "@/context/SessionProvider"
 import { useSupabase } from "@/context/SupabaseProvider"
 
-export function UserDropdown({ session }: any) {
+export function UserDropdown() {
     const { user, signOut } = useAuth()
     const { supabase } = useSupabase()
     const imageUrl: any = useImageDownloader(user?.avatar_url, supabase, "avatars")
@@ -44,7 +41,7 @@ export function UserDropdown({ session }: any) {
                     <div className="flex flex-col space-y-1">
                         <p className="text-sm font-medium leading-none">{user?.display_name || "Email"}</p>
                         <p className="text-xs leading-none text-muted-foreground">
-                            {session?.user?.email}
+                            {user?.session?.user?.email}
                         </p>
                     </div>
                 </DropdownMenuLabel>
