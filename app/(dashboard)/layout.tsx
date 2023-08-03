@@ -22,7 +22,7 @@ const Layout = async ({ children }: any) => {
         <div className="flex">
             <Sidebar />
             <div className="w-full flex-col">
-                <Navbar session={session} />
+                <Navbar />
                 <main className={cn("w-full bg-background transition-all duration-200 ease-in-out")}>
                     <div className='h-full min-h-[100vh] overflow-x-hidden p-3'>
                         {children}

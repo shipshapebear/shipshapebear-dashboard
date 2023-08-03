@@ -6,8 +6,9 @@ import { createContext, useContext, useEffect } from "react";
 import useSWR from "swr";
 import { useSupabase } from "./SupabaseProvider";
 
+
 interface ContextI {
-    user: Profile | null | undefined;
+    user: any;
     error: any;
     isLoading: boolean;
     mutate: any;
@@ -91,8 +92,14 @@ export default function SupabaseAuthProvider({
         };
     }, [router, supabase, serverSession?.access_token]);
 
+
+    const userdata = {
+        ...user,
+        session: serverSession
+    }
+
     const exposed: ContextI = {
-        user,
+        user: userdata,
         error,
         isLoading,
         mutate,
