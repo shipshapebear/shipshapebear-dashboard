@@ -13,6 +13,7 @@ async function getData() {
         }
     })
 
+
     // Access auth admin api
     const adminAuthClient = supabase.auth.admin
     const { data: { users }, error } = await adminAuthClient.listUsers()
@@ -43,6 +44,8 @@ async function getData() {
 
 export default async function Page() {
     const data = await getData()
+
+
 
     return (
         <div className="container mx-auto py-10">
