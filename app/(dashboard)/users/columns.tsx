@@ -66,7 +66,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
     {
         id: "Display Name",
-        accessorKey: "display_name",
+        accessorKey: "displayName",
         header: "Name",
 
     },
@@ -77,7 +77,7 @@ export const columns: ColumnDef<Payment>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-            const payment = row.original
+            const user = row.original
 
             return (
                 <DropdownMenu>
@@ -90,13 +90,12 @@ export const columns: ColumnDef<Payment>[] = [
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(payment.id)}
+                            onClick={() => navigator.clipboard.writeText(user.id)}
                         >
-                            Copy payment ID
+                            Update user
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
-                        <DropdownMenuItem>View payment details</DropdownMenuItem>
+                        <DropdownMenuItem>View user info</DropdownMenuItem>
+                        <DropdownMenuItem>Delete user</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

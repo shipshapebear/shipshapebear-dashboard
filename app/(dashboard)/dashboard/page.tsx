@@ -1,21 +1,38 @@
 import React from 'react'
-import { profile } from "@/drizzle/schema"
 import { db } from "@/drizzle/connection"
+import { createClient } from '@/lib/supabase-server'
+import { profile } from '@/drizzle/schema'
+import { eq, lt, gte, ne, sql, InferModel } from "drizzle-orm";
+import { useAuth } from '@/context/SessionProvider'
+import WelcomeCard from './welcome-card';
 
 export const revalidate = 0
 const getData = async () => {
-  const allUsers = await db.select().from(profile);
+  type User = InferModel<typeof profile, "select">;
 
-  if (!allUsers) return null
+  const supabase = createClient()
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+  const userId = session?.user.id
+  const user: User[] = await db.select().from(profile).where(sql`${profile.id} = ${userId}`);
+  if (!user) return null
 
-  return allUsers
+  return {
+    session,
+    ...user[0]
+  }
 
 }
 
 const Page = async () => {
   const data = await getData()
+
   return (
-    <pre>{JSON.stringify(data, null, 2)}</pre>
+    <>
+      <h1 className='mb-4 text-2xl font-bold text-foreground capitalize'>{process.env.NODE_ENV} Dashboard</h1>
+      <WelcomeCard displayName={data?.displayName} username={data?.username} avatarUrl={data?.avatarUrl} />
+    </>
   )
 }
 
