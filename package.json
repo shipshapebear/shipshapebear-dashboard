@@ -14,7 +14,8 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "update-types": "npx supabase gen types typescript --project-id \"xithdtdafzkzlxveqkkf\" > types/database.ts",
     "migrate": "npx drizzle-kit generate:pg",
-    "introspect": "npx drizzle-kit introspect:pg"
+    "introspect": "npx drizzle-kit introspect:pg",
+    "drop": "npx drizzle-kit drop"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.0.3",
