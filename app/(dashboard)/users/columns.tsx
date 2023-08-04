@@ -66,7 +66,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
     {
         id: "Display Name",
-        accessorKey: "display_name",
+        accessorKey: "displayName",
         header: "Name",
 
     },
