@@ -2,10 +2,9 @@
 import React, { useState } from 'react'
 import { Database } from '@/types/database'
 import { AvatarImage, Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { AiOutlineUser } from 'react-icons/ai'
+import { User, Upload } from 'lucide-react'
 import useImageDownloader from '@/lib/utils/useImageDownloader'
 import { buttonVariants } from '@/components/ui/button'
-import { BiUpload } from 'react-icons/bi'
 
 
 type Profiles = Database['public']['Tables']['profile']['Row']
@@ -66,11 +65,11 @@ export default function UserAvatar({
                         <AvatarImage src={imagePreview} alt="preview image" /> :
                         <AvatarImage src={imageUrl} alt="user image" />
                     }
-                    <AvatarFallback><AiOutlineUser /></AvatarFallback>
+                    <AvatarFallback><User /></AvatarFallback>
                 </Avatar>
                 <div className={buttonVariants({ variant: 'default' })}>
                     <label className="button primary inline-flex items-center gap-x-2" htmlFor="single">
-                        {imageUrl ? "Update photo" : "Upload photo"}<BiUpload className='h-[20px] w-[20px]' />
+                        {imageUrl ? "Update photo" : "Upload photo"}<Upload className='h-[20px] w-[20px]' />
                     </label>
                     <input
                         style={{

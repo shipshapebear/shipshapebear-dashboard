@@ -15,7 +15,7 @@ import {
     DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { AiOutlineUser } from 'react-icons/ai'
+import { User } from 'lucide-react'
 import Link from "next/link"
 import useImageDownloader from "@/lib/utils/useImageDownloader"
 import { useAuth } from "@/context/SessionProvider"
@@ -32,7 +32,7 @@ export function UserDropdown() {
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
                         <AvatarImage src={imageUrl} alt="user image" />
-                        <AvatarFallback><AiOutlineUser /></AvatarFallback>
+                        <AvatarFallback><User /></AvatarFallback>
                     </Avatar>
                 </Button>
             </DropdownMenuTrigger>
