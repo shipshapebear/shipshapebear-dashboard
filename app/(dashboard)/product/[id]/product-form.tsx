@@ -48,8 +48,7 @@ const ProductForm = ({ product }) => {
 
     return (
         <>
-            <h1 className='mb-4 text-2xl font-bold text-foreground capitalize'>Update Product {process.env.NODE_ENV}</h1>
-
+            <h1 className='mb-4 text-2xl font-bold capitalize text-foreground'>Update Product {process.env.NODE_ENV}</h1>
             <Card className='max-w-lg p-4'>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 ">
