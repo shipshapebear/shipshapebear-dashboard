@@ -46,6 +46,7 @@ export default async function Page() {
 
     return (
         <div className="container mx-auto py-10">
+            <h1 className='mb-4 text-2xl font-bold text-foreground capitalize'>{process.env.NODE_ENV} Users</h1>
             <DataTable columns={columns} data={data} />
         </div>
     )

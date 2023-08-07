@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip'
-import { LayoutDashboard, Layers, Users, User, ChevronLeft } from 'lucide-react'
+import { LayoutDashboard, Layers, Users, User, ChevronLeft, ShoppingCart } from 'lucide-react'
 
 const Sidebar = () => {
     const [toggled, setToggled] = useState(true)
@@ -15,6 +15,7 @@ const Sidebar = () => {
     const Menu = [
         { value: "Dashboard", link: "/dashboard", icon: <LayoutDashboard className={cn("mx-4 h-10 w-6", toggled ? "mx-4 inline-block " : "mx-auto block")} /> },
         { value: "Services", link: "/services", icon: <Layers className={cn("mx-4 h-10 w-6", toggled ? "mx-4 inline-block " : "mx-auto block")} /> },
+        { value: "Products", link: "/products", icon: <ShoppingCart className={cn("mx-4 h-10 w-6", toggled ? "mx-4 inline-block " : "mx-auto block")} /> },
         { value: "Users", link: "/users", icon: <Users className={cn("mx-4 h-10 w-6", toggled ? "mx-4 inline-block " : "mx-auto block")} /> },
         { value: "Profile", link: "/profile", icon: <User className={cn("mx-4 h-10 w-6", toggled ? "mx-4 inline-block " : "mx-auto block")} /> }
     ]
