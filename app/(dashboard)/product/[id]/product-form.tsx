@@ -40,12 +40,8 @@ const ProductForm = ({ product }) => {
         handleUpdate(product.id, data)
 
         toast({
-            title: "You submitted the following values:",
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-                </pre>
-            ),
+            title: "Update successful.",
+            description: `Item ${product.id} updated successfully.`
         })
     }
 
