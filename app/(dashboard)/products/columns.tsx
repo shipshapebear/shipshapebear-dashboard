@@ -12,18 +12,16 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from "@/components/ui/checkbox"
-import Link from "next/link"
+import { UseProduct } from "@/context/ProductProvider"
+import { products } from "@/drizzle/schema"
+import { InferModel } from "drizzle-orm"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
-    id: string
-    title: number
-    status: "pending" | "processing" | "success" | "failed"
-    email: string
-}
 
-export const columns: ColumnDef<Payment>[] = [
+export type ProductType = InferModel<typeof products>
+
+export const columns: ColumnDef<ProductType>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -61,8 +59,8 @@ export const columns: ColumnDef<Payment>[] = [
                 </Button>
             )
         },
-        cell: ({row}) => {
-            return row.getValue("title").split(" ")[0]
+        cell: ({ row }) => {
+            return row.getValue("title")
         }
     },
 
@@ -78,7 +76,8 @@ export const columns: ColumnDef<Payment>[] = [
         id: "actions",
         cell: ({ row }) => {
             const product = row.original
-        
+            const { setProduct } = UseProduct()
+
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -94,8 +93,8 @@ export const columns: ColumnDef<Payment>[] = [
                         >
                             Copy product id
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                            <Link href={`/product/${product.id}`}>Update product</Link>
+                        <DropdownMenuItem onClick={() => setProduct(product)}>
+                            Update Product
                         </DropdownMenuItem>
                         <DropdownMenuItem>Delete product</DropdownMenuItem>
                     </DropdownMenuContent>

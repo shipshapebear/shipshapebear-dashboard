@@ -32,7 +32,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { DataTablePagination } from "@/components/ui/data-table-pagination"
-
+import ProductDrawer from "./product-drawer"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -70,6 +70,7 @@ export function DataTable<TData, TValue>({
             rowSelection,
         },
     })
+
 
     return (
         <div>
@@ -156,6 +157,7 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
+            <ProductDrawer />
 
             <DataTablePagination table={table} />
         </div>
