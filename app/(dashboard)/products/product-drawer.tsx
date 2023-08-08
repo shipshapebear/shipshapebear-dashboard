@@ -1,22 +1,117 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, Drawer, DrawerTrigger } from '@/components/ui/drawer'
 import { Button } from '@/components/ui/button'
+import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/text-area'
+import { toast } from '@/lib/utils/useToast'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { handleUpdate } from '@/app/actions'
+import { UseProduct } from '@/context/ProductProvider'
+
+
+const productFormSchema = z.object({
+    title: z
+        .string(),
+    price: z.string(),
+    description: z.string({
+        required_error: "Please select a language.",
+    }).max(500, {
+        message: "Name must not be longer than 300 characters.",
+    }),
+})
+
+type ProductFormValues = z.infer<typeof productFormSchema>
+
+
 
 const ProductDrawer = () => {
+    const { setProduct, product } = UseProduct()
+
+    //setting default values || thsi does not work when product is from useState
+    // const defaultValues: Partial<ProductFormValues> = {
+    //     title: product?.title as string,
+    //     price: product?.price as string,
+    //     description: product?.description as string
+    // }
+    const form = useForm<ProductFormValues>({
+        resolver: zodResolver(productFormSchema),
+        // defaultValues,
+    })
+    async function onSubmit(data: ProductFormValues) {
+
+        handleUpdate(product?.id, data)
+
+        toast({
+            title: "Update successful.",
+            description: `Item ${product.id} updated successfully.`
+        })
+    }
+
+    useEffect(() => {
+        form.setValue("title", product?.title as string)
+        form.setValue("price", product?.price as string)
+        form.setValue("description", product?.description as string)
+    }, [product, form])
+
     return (
-        <Drawer defaultOpen={true}>
-            <DrawerContent className="sm:max-w-[425px]" title="test">
-                <DrawerHeader title="Edit Profile" />
-                <div className="flex-1 overflow-y-auto p-6">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum quod voluptate minus sequi, quasi necessitatibus maiores, nulla voluptatem voluptates vel eligendi tenetur odit reprehenderit vero aliquid saepe excepturi dolore iste ipsum deserunt cum aspernatur? Tenetur corporis, laborum dolores natus enim cum aliquam earum perspiciatis tempore reprehenderit in beatae deleniti, iure a, perferendis qui repellat praesentium error odio? Dolores dolore quaerat excepturi deleniti neque laborum praesentium fuga, autem aliquam qui doloribus aliquid consectetur accusamus illum, deserunt suscipit ea quisquam consequuntur ex dolor, nostrum omnis? Debitis, perspiciatis? Ipsa maxime harum quibusdam dolore possimus ipsum optio ut nesciunt, mollitia ea, officiis cupiditate quas doloribus velit libero minus deleniti eaque eligendi omnis cumque? Dolorum qui omnis quas libero, ratione sapiente quisquam itaque quae, placeat quasi totam soluta non, similique illo harum tempora nemo eveniet aliquam deleniti exercitationem adipisci facere molestias. Quae dolor aliquid quam hic incidunt ea sequi dolores fugit eius quas, fuga eaque, recusandae qui. Voluptatem illo minus excepturi necessitatibus commodi consequatur, provident asperiores doloremque vero facilis officiis cupiditate enim autem. Voluptas assumenda nemo quam quidem eligendi, minus fuga odio tempore adipisci pariatur a veritatis amet, ad natus ratione. Est, quidem consectetur odit esse minima sapiente ratione iure porro dolores repellendus suscipit! Ab voluptate quas veritatis. Natus labore quos aperiam omnis ullam, delectus explicabo odio ducimus sed, accusamus quis accusantium. Cum, reprehenderit quibusdam inventore totam facilis perspiciatis laudantium voluptas harum pariatur obcaecati in incidunt. Laboriosam fuga deleniti deserunt neque explicabo numquam, id praesentium ipsa amet aut sint. Soluta saepe eligendi quia animi eius?
-                </div>
-                <DrawerFooter>
-                    <Button variant="outline" size="sm">Test Button</Button>
-                    <Button variant="secondary" size="sm">Test Button</Button>
-                </DrawerFooter>
+        <Drawer open={!!product} onOpenChange={setProduct}>
+            <DrawerContent className="sm:max-w-[425px]">
+                <form onSubmit={form.handleSubmit(onSubmit)} className='flex h-screen flex-col'>
+                    <DrawerHeader title="Edit Profile" />
+                    <div className="flex-1 overflow-y-auto p-6">
+                        <Form {...form}>
+                            <FormField
+                                control={form.control}
+                                name="title"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Title</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Title" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="price"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Price</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Price" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="description"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Description</FormLabel>
+                                        <FormControl>
+                                            <Textarea placeholder="Description" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </Form>
+                    </div>
+                    <DrawerFooter>
+                        <Button variant="outline" type="button" size="sm" onClick={() => setProduct(null)}>Close</Button>
+                        <Button variant="secondary" size="sm" type='submit'>Save Changes</Button>
+                    </DrawerFooter>
+                </form>
             </DrawerContent>
-        </Drawer>
+        </Drawer >
     )
 }
 

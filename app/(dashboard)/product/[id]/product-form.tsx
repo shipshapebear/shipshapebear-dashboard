@@ -9,8 +9,8 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/text-area'
 import { Card } from '@/components/ui/card'
-import { handleUpdate } from './actions'
-
+import { handleUpdate } from '@/app/actions'
+import { DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, Drawer, DrawerTrigger } from '@/components/ui/drawer'
 const productFormSchema = z.object({
     title: z
         .string(),
@@ -59,7 +59,7 @@ const ProductForm = ({ product }) => {
                                 <FormItem>
                                     <FormLabel>Title</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Your name" {...field} />
+                                        <Input placeholder="Title" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -72,7 +72,7 @@ const ProductForm = ({ product }) => {
                                 <FormItem>
                                     <FormLabel>Price</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Your name" {...field} />
+                                        <Input placeholder="Price" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -85,7 +85,7 @@ const ProductForm = ({ product }) => {
                                 <FormItem>
                                     <FormLabel>Description</FormLabel>
                                     <FormControl>
-                                        <Textarea placeholder="Your name" {...field} />
+                                        <Textarea placeholder="Description" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
