@@ -39,7 +39,7 @@ const ProductDrawer = () => {
     }
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(productFormSchema),
-        mode: "onSubmit"
+        mode: "onBlur"
         // defaultValues,
     })
 
@@ -90,6 +90,7 @@ const ProductDrawer = () => {
                     <div className="flex-1 space-y-3 overflow-y-auto p-6">
                         <Form {...form}>
                             <FormField
+                                defaultValue=''
                                 control={form.control}
                                 name="title"
                                 render={({ field }) => (
@@ -103,6 +104,7 @@ const ProductDrawer = () => {
                                 )}
                             />
                             <FormField
+                                defaultValue=''
                                 control={form.control}
                                 name="price"
                                 render={({ field }) => (
@@ -116,6 +118,7 @@ const ProductDrawer = () => {
                                 )}
                             />
                             <FormField
+                                defaultValue=''
                                 control={form.control}
                                 name="description"
                                 render={({ field }) => (
