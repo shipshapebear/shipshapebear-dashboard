@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { handleUpdate } from '@/app/actions'
 import { UseProduct } from '@/context/ProductProvider'
-
+import { useRouter } from 'next/navigation'
 
 const productFormSchema = z.object({
     title: z
@@ -30,6 +30,7 @@ type ProductFormValues = z.infer<typeof productFormSchema>
 
 const ProductDrawer = () => {
     const { setProduct, product } = UseProduct()
+    const route = useRouter()
 
     //setting default values || thsi does not work when product is from useState
     // const defaultValues: Partial<ProductFormValues> = {
@@ -46,9 +47,11 @@ const ProductDrawer = () => {
         handleUpdate(product?.id, data)
 
         toast({
+            variant: "success",
             title: "Update successful.",
-            description: `Item ${product.id} updated successfully.`
         })
+
+        route.refresh()
     }
 
     useEffect(() => {
