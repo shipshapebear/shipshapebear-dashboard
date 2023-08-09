@@ -36,7 +36,7 @@ export default function AccountForm() {
             })
             if (error) throw error
             toast({
-                title: "Success",
+                variant: "success",
                 description: "Your profile is successsfully updated."
             })
         } catch (error) {

@@ -42,10 +42,6 @@ export const columns: ColumnDef<ProductType>[] = [
         enableHiding: false,
     },
     {
-        id: "id",
-        accessorKey: "id",
-    },
-    {
         accessorKey: "title",
         header: ({ column }) => {
             return (
@@ -88,13 +84,14 @@ export const columns: ColumnDef<ProductType>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuSeparator/>
+                        <DropdownMenuItem onClick={() => setProduct(product)}>
+                            Edit
+                        </DropdownMenuItem>
                         <DropdownMenuItem
                             onClick={() => navigator.clipboard.writeText(product.id)}
                         >
                             Copy product id
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setProduct(product)}>
-                            Update Product
                         </DropdownMenuItem>
                         <DropdownMenuItem>Delete product</DropdownMenuItem>
                     </DropdownMenuContent>
