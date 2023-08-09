@@ -107,7 +107,7 @@ const ProductDrawer = () => {
                     </div>
                     <DrawerFooter>
                         <Button variant="outline" type="button" size="sm" onClick={() => setProduct(null)}>Close</Button>
-                        <Button variant="secondary" size="sm" type='submit'>Save Changes</Button>
+                        <Button size="sm" type='submit'>Save Changes</Button>
                     </DrawerFooter>
                 </form>
             </DrawerContent>
