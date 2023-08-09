@@ -10,6 +10,8 @@ type ProductType = InferModel<typeof products>
 type ProductContext = {
     product: ProductType;
     setProduct: any;
+    action: string | null;
+    setAction: any
 };
 
 const Context = createContext<ProductContext | undefined>(undefined);
@@ -20,9 +22,10 @@ export default function ProductProvider({
     children: React.ReactNode;
 }) {
     const [product, setProduct] = useState<ProductType | any>(null);
+    const [action, setAction] = useState<string | null>(null)
 
     return (
-        <Context.Provider value={{ product, setProduct }}>
+        <Context.Provider value={{ product, setProduct, action, setAction }}>
             <>{children}</>
         </Context.Provider>
     );
