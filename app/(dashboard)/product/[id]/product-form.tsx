@@ -34,6 +34,7 @@ const ProductForm = ({ product }) => {
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(productFormSchema),
         defaultValues,
+        mode: 'onChange',
     })
     async function onSubmit(data: ProductFormValues) {
 

@@ -9,14 +9,14 @@ import { toast } from '@/lib/utils/useToast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { handleUpdate } from '@/app/actions'
+import { handleUpdate, handleAdd } from '@/app/actions'
 import { UseProduct } from '@/context/ProductProvider'
 import { useRouter } from 'next/navigation'
 
 const productFormSchema = z.object({
     title: z
         .string(),
-    price: z.string(),
+    price: z.string({ required_error: "Please input price" }),
     description: z.string({
         required_error: "Please select a language.",
     }).max(500, {
@@ -27,23 +27,23 @@ const productFormSchema = z.object({
 type ProductFormValues = z.infer<typeof productFormSchema>
 
 
-
 const ProductDrawer = () => {
-    const { setProduct, product } = UseProduct()
+    const { setProduct, product, action, setAction } = UseProduct()
     const route = useRouter()
 
     //setting default values || thsi does not work when product is from useState
-    // const defaultValues: Partial<ProductFormValues> = {
-    //     title: product?.title as string,
-    //     price: product?.price as string,
-    //     description: product?.description as string
-    // }
+    const defaultValues: Partial<ProductFormValues> = {
+        // title: null,
+        // price: null,
+        // description: null,
+    }
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(productFormSchema),
+        mode: "onBlur"
         // defaultValues,
     })
-    async function onSubmit(data: ProductFormValues) {
 
+    const editFunction = (data: any) => {
         handleUpdate(product?.id, data)
 
         toast({
@@ -54,18 +54,40 @@ const ProductDrawer = () => {
         route.refresh()
     }
 
+    const addFunction = (data: any) => {
+        handleAdd(data)
+
+        toast({
+            variant: "success",
+            title: "Added successfully.",
+        })
+
+        route.refresh()
+    }
+
+    async function onSubmit(data: ProductFormValues) {
+        const actionFunction = () => action === "ADD" ? addFunction(data) : editFunction(data)
+        actionFunction()
+    }
+
+
     useEffect(() => {
-        form.setValue("title", product?.title as string)
-        form.setValue("price", product?.price as string)
-        form.setValue("description", product?.description as string)
-    }, [product, form])
+        if (action === "ADD") return
+        form.setValue("title", product?.title as string ?? undefined)
+        form.setValue("price", product?.price as string ?? undefined)
+        form.setValue("description", product?.description as string ?? undefined)
+    }, [product, form, action])
+
 
     return (
-        <Drawer open={!!product} onOpenChange={setProduct}>
+        <Drawer open={!!product || action} onOpenChange={() => {
+            setProduct()
+            setAction()
+        }}>
             <DrawerContent className="sm:max-w-[425px]">
                 <form onSubmit={form.handleSubmit(onSubmit)} className='flex h-screen flex-col'>
-                    <DrawerHeader title="Edit Profile" />
-                    <div className="flex-1 overflow-y-auto p-6">
+                    <DrawerHeader title={`${action === "ADD" ? "Add Product" : "Edit Product"}`} />
+                    <div className="flex-1 space-y-3 overflow-y-auto p-6">
                         <Form {...form}>
                             <FormField
                                 control={form.control}
@@ -109,8 +131,11 @@ const ProductDrawer = () => {
                         </Form>
                     </div>
                     <DrawerFooter>
-                        <Button variant="outline" type="button" size="sm" onClick={() => setProduct(null)}>Close</Button>
-                        <Button size="sm" type='submit'>Save Changes</Button>
+                        <Button variant="outline" type="button" size="sm" onClick={() => {
+                            setProduct(null)
+                            setAction(null)
+                        }}>Close</Button>
+                        <Button size="sm" type='submit'>Save</Button>
                     </DrawerFooter>
                 </form>
             </DrawerContent>

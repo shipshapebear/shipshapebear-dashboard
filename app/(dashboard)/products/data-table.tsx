@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { DataTablePagination } from "@/components/ui/data-table-pagination"
 import ProductDrawer from "./product-drawer"
+import { UseProduct } from "@/context/ProductProvider"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -71,10 +72,10 @@ export function DataTable<TData, TValue>({
         },
     })
 
-
+    const { setAction } = UseProduct()
     return (
         <div>
-            <div className="flex items-center py-4">
+            <div className="flex items-center gap-x-2 py-4">
                 <Input
                     placeholder="Filter title..."
                     value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
@@ -83,6 +84,7 @@ export function DataTable<TData, TValue>({
                     }
                     className="max-w-sm"
                 />
+                <Button onClick={() => setAction("ADD")}>Add product</Button>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">
