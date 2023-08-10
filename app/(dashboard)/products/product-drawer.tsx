@@ -39,7 +39,7 @@ const ProductDrawer = () => {
     }
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(productFormSchema),
-        mode: "onBlur"
+        mode: "onSubmit"
         // defaultValues,
     })
 

@@ -3,7 +3,7 @@
 import { notFound } from "next/navigation"
 import { db } from "@/drizzle/connection"
 import { products } from "@/drizzle/schema"
-import { InferModel, sql } from "drizzle-orm"
+import { InferModel, eq, inArray, sql } from "drizzle-orm"
 
 export const handleUpdate = async (id, data) => {
   await db
@@ -21,4 +21,10 @@ type NewProduct = InferModel<typeof products, "insert">
 
 export const handleAdd = async (product: NewProduct) => {
   await db.insert(products).values(product)
+}
+
+export const handleDeleteIds = async (ids: number[]) => {
+  for (let id in ids) {
+    await db.delete(products).where(sql`${products.id}=${ids[id]}`)
+  }
 }

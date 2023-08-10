@@ -42,6 +42,10 @@ export const columns: ColumnDef<ProductType>[] = [
         enableHiding: false,
     },
     {
+        id: "id",
+        accessorKey: "id",
+    },
+    {
         accessorKey: "title",
         header: ({ column }) => {
             return (
@@ -59,6 +63,7 @@ export const columns: ColumnDef<ProductType>[] = [
             return row.getValue("title")
         }
     },
+
 
     {
         id: "description",
@@ -84,7 +89,7 @@ export const columns: ColumnDef<ProductType>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuSeparator/>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={() => setProduct(product)}>
                             Edit
                         </DropdownMenuItem>
