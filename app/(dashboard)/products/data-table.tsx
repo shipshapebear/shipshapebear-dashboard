@@ -34,6 +34,8 @@ import {
 import { DataTablePagination } from "@/components/ui/data-table-pagination"
 import ProductDrawer from "./product-drawer"
 import { UseProduct } from "@/context/ProductProvider"
+import { handleDeleteIds } from "@/app/actions"
+import { useRouter } from "next/navigation"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -73,6 +75,15 @@ export function DataTable<TData, TValue>({
     })
 
     const { setAction } = UseProduct()
+    const route = useRouter()
+    const { rows } = table.getFilteredSelectedRowModel()
+    const selectedRows = rows.map((row) => row.original.id)
+    const handleMultipleDelete = async () => {
+        await handleDeleteIds(selectedRows)
+        table.toggleAllPageRowsSelected(false)
+        route.refresh()
+    }
+    
     return (
         <div>
             <div className="flex items-center gap-x-2 py-4">
@@ -84,7 +95,8 @@ export function DataTable<TData, TValue>({
                     }
                     className="max-w-sm"
                 />
-                <Button onClick={() => setAction("ADD")}>Add product</Button>
+                <Button onClick={() => setAction("ADD")}>Add</Button>
+                <Button variant="destructive" onClick={handleMultipleDelete}>Delete</Button>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">
