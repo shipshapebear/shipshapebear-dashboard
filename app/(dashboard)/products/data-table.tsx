@@ -30,12 +30,17 @@ import {
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuTrigger,
+    DropdownMenuItem,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger
 } from "@/components/ui/dropdown-menu"
 import { DataTablePagination } from "@/components/ui/data-table-pagination"
 import ProductDrawer from "./product-drawer"
 import { UseProduct } from "@/context/ProductProvider"
 import { handleDeleteIds } from "@/app/actions"
 import { useRouter } from "next/navigation"
+import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -83,7 +88,7 @@ export function DataTable<TData, TValue>({
         table.toggleAllPageRowsSelected(false)
         route.refresh()
     }
-    
+
     return (
         <div>
             <div className="flex items-center gap-x-2 py-4">
@@ -95,34 +100,46 @@ export function DataTable<TData, TValue>({
                     }
                     className="max-w-sm"
                 />
-                <Button onClick={() => setAction("ADD")}>Add</Button>
-                <Button variant="destructive" onClick={handleMultipleDelete}>Delete</Button>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">
-                            Columns
+                            Actions
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        {table
-                            .getAllColumns()
-                            .filter(
-                                (column) => column.getCanHide()
-                            )
-                            .map((column) => {
-                                return (
-                                    <DropdownMenuCheckboxItem
-                                        key={column.id}
-                                        className="capitalize"
-                                        checked={column.getIsVisible()}
-                                        onCheckedChange={(value) =>
-                                            column.toggleVisibility(!!value)
-                                        }
-                                    >
-                                        {column.id}
-                                    </DropdownMenuCheckboxItem>
-                                )
-                            })}
+                        <DropdownMenuItem onClick={() => setAction("ADD")}>
+                            Add product
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleMultipleDelete}>
+                            Delete selected
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuSub>
+                            <DropdownMenuSubTrigger>Columns</DropdownMenuSubTrigger>
+                            <DropdownMenuSubContent>
+
+                                {table
+                                    .getAllColumns()
+                                    .filter(
+                                        (column) => column.getCanHide()
+                                    )
+                                    .map((column) => {
+                                        return (
+                                            <DropdownMenuCheckboxItem
+                                                key={column.id}
+                                                className="capitalize"
+                                                checked={column.getIsVisible()}
+                                                onCheckedChange={(value) =>
+                                                    column.toggleVisibility(!!value)
+                                                }
+                                            >
+                                                {column.id}
+                                            </DropdownMenuCheckboxItem>
+                                        )
+                                    })}
+                            </DropdownMenuSubContent>
+                        </DropdownMenuSub>
+
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
