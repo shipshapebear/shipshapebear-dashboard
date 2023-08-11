@@ -12,17 +12,14 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from "@/components/ui/checkbox"
+import { profile } from "@/types/collection"
+import { InferModel } from "drizzle-orm"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
-    id: string
-    amount: number
-    status: "pending" | "processing" | "success" | "failed"
-    email: string
-}
+type Profile = InferModel<typeof profile>
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Profile>[] = [
     {
         id: "select",
         header: ({ table }) => (
