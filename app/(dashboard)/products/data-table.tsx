@@ -38,9 +38,12 @@ import {
 import { DataTablePagination } from "@/components/ui/data-table-pagination"
 import ProductDrawer from "./product-drawer"
 import { UseProduct } from "@/context/ProductProvider"
-import { handleDeleteIds } from "@/app/actions"
+import { handleDeleteIds, handleDeleteId} from "@/app/actions"
 import { useRouter } from "next/navigation"
 import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu"
+import { AlertDialogHeader, AlertDialogFooter } from "@/components/ui/alert-dialog"
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogTitle, AlertDialogDescription, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog"
+import { toast } from "@/lib/utils/useToast"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -79,14 +82,31 @@ export function DataTable<TData, TValue>({
         },
     })
 
-    const { setAction } = UseProduct()
+    const { setAction, productToDelete, setProductToDelete } = UseProduct()
     const route = useRouter()
     const { rows } = table.getFilteredSelectedRowModel()
     const selectedRows = rows.map((row) => row.original.id)
+    const [deleteConfirmatioOpen, setDeleteConfirmationOpen] = React.useState(false)
     const handleMultipleDelete = async () => {
+        setDeleteConfirmationOpen(false)
         await handleDeleteIds(selectedRows)
         table.toggleAllPageRowsSelected(false)
         route.refresh()
+
+        toast({
+            variant: "success",
+            title: "Successfully deleted rows.",
+        })
+    }
+    const handleDelete = async () => {
+        setProductToDelete(null)
+        await handleDeleteId(productToDelete as number)
+        route.refresh()
+
+        toast({
+            variant: "success",
+            title: "Successfully deleted row.",
+        })
     }
 
     return (
@@ -110,14 +130,14 @@ export function DataTable<TData, TValue>({
                         <DropdownMenuItem onClick={() => setAction("ADD")}>
                             Add product
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={handleMultipleDelete}>
+                        <DropdownMenuItem disabled={selectedRows.length === 0} onClick={() => setDeleteConfirmationOpen(true)}>
                             Delete selected
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuSub>
                             <DropdownMenuSubTrigger>Columns</DropdownMenuSubTrigger>
                             <DropdownMenuSubContent>
-
+                                D
                                 {table
                                     .getAllColumns()
                                     .filter(
@@ -189,7 +209,36 @@ export function DataTable<TData, TValue>({
                 </Table>
             </div>
             <ProductDrawer />
-
+            <AlertDialog open={deleteConfirmatioOpen}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Delete</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete the selected rows.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel onClick={() => setDeleteConfirmationOpen(false)}>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleMultipleDelete}>Continue</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+            {
+                productToDelete && <AlertDialog open={!!productToDelete}>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Delete</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete the row.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel onClick={() => setDeleteConfirmationOpen(false)}>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={handleDelete}>Continue</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            }
             <DataTablePagination table={table} />
         </div>
     )

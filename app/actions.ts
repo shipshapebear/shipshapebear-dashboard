@@ -28,3 +28,6 @@ export const handleDeleteIds = async (ids: number[]) => {
     await db.delete(products).where(sql`${products.id}=${ids[id]}`)
   }
 }
+export const handleDeleteId = async (id: number) => {
+  await db.delete(products).where(sql`${products.id}=${id}`)
+}

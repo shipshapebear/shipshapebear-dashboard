@@ -77,7 +77,7 @@ export const columns: ColumnDef<ProductType>[] = [
         id: "actions",
         cell: ({ row }) => {
             const product = row.original
-            const { setProduct } = UseProduct()
+            const { setProduct, setProductToDelete } = UseProduct()
 
             return (
                 <DropdownMenu>
@@ -93,12 +93,12 @@ export const columns: ColumnDef<ProductType>[] = [
                         <DropdownMenuItem onClick={() => setProduct(product)}>
                             Edit
                         </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setProductToDelete(product.id)}>Delete product</DropdownMenuItem>
                         <DropdownMenuItem
                             onClick={() => navigator.clipboard.writeText(product.id)}
                         >
                             Copy product id
                         </DropdownMenuItem>
-                        <DropdownMenuItem>Delete product</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
