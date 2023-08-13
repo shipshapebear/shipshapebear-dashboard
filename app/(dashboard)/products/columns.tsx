@@ -94,11 +94,6 @@ export const columns: ColumnDef<ProductType>[] = [
                             Edit
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => setProductToDelete(product.id)}>Delete product</DropdownMenuItem>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(product.id)}
-                        >
-                            Copy product id
-                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
