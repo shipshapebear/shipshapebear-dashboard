@@ -17,7 +17,7 @@ const Layout = async ({ children }: any) => {
     if (!session) {
         redirect('/login')
     }
-
+ 
     return (
         <div className="flex">
             <Sidebar />
