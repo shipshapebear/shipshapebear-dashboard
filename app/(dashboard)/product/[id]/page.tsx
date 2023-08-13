@@ -6,7 +6,7 @@ import { sql } from 'drizzle-orm'
 import ProductForm from './product-form'
 
 export const revalidate = 120
-async function getData({ id }: number) {
+async function getData({ id }: any) {
     // Fetch data from your API here.
     const product = await db.select().from(products).where(sql`${products.id} = ${id}`);
 

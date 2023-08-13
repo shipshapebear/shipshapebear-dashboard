@@ -12,14 +12,14 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from "@/components/ui/checkbox"
-import { profile } from "@/types/collection"
+import { profile } from "@/drizzle/schema"
 import { InferModel } from "drizzle-orm"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-type Profile = InferModel<typeof profile>
+type IProfile = InferModel<typeof profile>
 
-export const columns: ColumnDef<Profile>[] = [
+export const columns: ColumnDef<IProfile>[] = [
     {
         id: "select",
         header: ({ table }) => (

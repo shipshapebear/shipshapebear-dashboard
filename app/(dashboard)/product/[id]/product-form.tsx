@@ -25,7 +25,7 @@ const productFormSchema = z.object({
 type ProductFormValues = z.infer<typeof productFormSchema>
 
 
-const ProductForm = ({ product }) => {
+const ProductForm = ({ product }: any) => {
     const defaultValues: Partial<ProductFormValues> = {
         title: product.title,
         price: product.price,

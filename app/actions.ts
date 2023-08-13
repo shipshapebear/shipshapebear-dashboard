@@ -1,11 +1,11 @@
 "use server"
 
-import { notFound } from "next/navigation"
 import { db } from "@/drizzle/connection"
 import { products } from "@/drizzle/schema"
-import { InferModel, eq, inArray, sql } from "drizzle-orm"
+import { InferModel, sql } from "drizzle-orm"
 
-export const handleUpdate = async (id, data) => {
+
+export const handleUpdate = async (id: number, data: { title: string; description: string; price: string }) => {
   await db
     .update(products)
     .set({
