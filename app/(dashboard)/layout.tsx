@@ -6,6 +6,8 @@ import { cn } from '@/lib/utils'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase-server'
 
+
+export const dynamic = 'force-dynamic'
 const Layout = async ({ children }: any) => {
 
     const supabase = createClient()
