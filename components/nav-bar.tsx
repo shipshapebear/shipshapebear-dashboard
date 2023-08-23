@@ -24,19 +24,21 @@ const Navbar = () => {
                         {Menu.map((val) => {
                             const isActive = pathname === val.link
                             return (
-                                <li key={val.value} className='relative px-4 py-2'>
-                                    <Link href={val.link} className={cn("flex select-none items-center z-10 text-sm text-primary-foreground", !isActive && "text-foreground")}>
+                                <li key={val.value} className="relative px-2 py-2  before:-z-10 before:bg-transparent before:content-[''] before:rounded-md hover:before:bg-accent before:absolute before:w-full before:h-[75%] before:inset-[20%,0,0,0]" >
+                                    <Link href={val.link} className={cn("flex select-none items-center z-10 text-sm text-foreground ")}>
                                         {val.value}
                                     </Link>
-                                    {isActive && <motion.div
-                                        className="block absolute bg-primary p-2 inset-0 -z-10 rounded-t-md"
-                                        layoutId="pagination"
-                                        transition={{
-                                            type: 'spring',
-                                            stiffness: 350,
-                                            damping: 30,
-                                        }}
-                                    />}
+                                    {
+                                        isActive && <motion.div
+                                            className="block absolute p-2 inset-0 -z-10 bg-transparent border-b-2 border-primary"
+                                            layoutId="bar"
+                                            transition={{
+                                                type: 'spring',
+                                                stiffness: 350,
+                                                damping: 30,
+                                            }}
+                                        />
+                                    }
                                 </li>)
                         })}
                     </ul>
@@ -61,7 +63,7 @@ const Navbar = () => {
                     <UserDropdown />
                 </div>
             </div>
-        </nav>
+        </nav >
     )
 }
 
