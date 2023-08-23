@@ -24,13 +24,15 @@ const Navbar = () => {
                         {Menu.map((val) => {
                             const isActive = pathname === val.link
                             return (
-                                <li key={val.value} className="relative px-2 py-2  before:-z-10 before:bg-transparent before:content-[''] before:rounded-md hover:before:bg-accent before:absolute before:w-full before:h-[75%] before:inset-[20%,0,0,0]" >
+                                <li key={val.value} className="relative py-2" >
                                     <Link href={val.link} className={cn("flex select-none items-center z-10 text-sm text-foreground ")}>
-                                        {val.value}
+                                        <div className="px-2 py-1 relative before:-z-10 before:bg-transparent before:content-[''] before:rounded-md hover:before:bg-accent before:absolute before:w-full before:h-full before:inset-0">
+                                            {val.value}
+                                        </div>
                                     </Link>
                                     {
                                         isActive && <motion.div
-                                            className="block absolute p-2 inset-0 -z-10 bg-transparent border-b-2 border-primary"
+                                            className="block absolute p-2 inset-0 -z-10 bg-transparent w-[90%] left-[5%] border-b-2 border-primary"
                                             layoutId="bar"
                                             transition={{
                                                 type: 'spring',
