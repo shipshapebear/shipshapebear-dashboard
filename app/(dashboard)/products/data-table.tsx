@@ -85,7 +85,7 @@ export function DataTable<TData, TValue>({
     const { setAction, productToDelete, setProductToDelete } = UseProduct()
     const route = useRouter()
     const { rows } = table.getFilteredSelectedRowModel()
-    const selectedRows = rows.map((row) => row.original.id)
+    const selectedRows = rows.map((row: any) => row.original.id)
     const [deleteConfirmatioOpen, setDeleteConfirmationOpen] = React.useState(false)
     const handleMultipleDelete = async () => {
         setDeleteConfirmationOpen(false)
