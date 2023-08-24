@@ -7,7 +7,7 @@ export const revalidate = 0
 export default async function Account() {
 
     return (
-        <div className='max-w-lg border-border p-5'>
+        <div className='max-w-lg border-border'>
             <AccountForm />
         </div>
     )

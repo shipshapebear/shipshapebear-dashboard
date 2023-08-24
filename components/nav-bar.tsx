@@ -16,7 +16,7 @@ const Navbar = () => {
     const pathname = usePathname()
 
     return (
-        <nav className={cn("navbar sticky top-0 z-10 flex h-[120px] w-full justify-end overflow-hidden border-b  border-border bg-background p-3 pb-0")}>
+        <nav className={cn("navbar relative z-10 flex h-[120px] w-full justify-end overflow-hidden border-b  border-border bg-background p-3 pb-0")}>
             <div className='flex gap-2 w-full justify-between'>
                 <div className='relative'>
                     <Button className='flex-none'>Create Appointment</Button>
@@ -32,7 +32,7 @@ const Navbar = () => {
                                     </Link>
                                     {
                                         isActive && <motion.div
-                                            className="block absolute p-2 inset-0 -z-10 bg-transparent w-[90%] left-[5%] border-b-2 border-primary"
+                                            className="block absolute bottom-0 -z-10 bg-primary h-[2px] w-[90%] left-[5%]"
                                             layoutId="bar"
                                             transition={{
                                                 type: 'spring',
