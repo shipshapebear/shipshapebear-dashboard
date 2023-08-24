@@ -51,7 +51,7 @@ export default function AccountForm() {
     const website = useRef<HTMLInputElement>(null)
 
     return (
-        <Card className="p-10">
+        <Card className="p-4">
             <UserAvatar
                 user={user}
                 supabase={supabase}

@@ -24,7 +24,7 @@ const Layout = async ({ children }: any) => {
             <div className="w-full flex-col">
                 <Navbar />
                 <main className={cn("w-full bg-background transition-all duration-200 ease-in-out")}>
-                    <div className='h-full min-h-[100vh] overflow-x-hidden p-3'>
+                    <div className='h-full min-h-[100vh] max-w-screen-xl mx-auto overflow-x-hidden p-3 mt-10'>
                         {children}
                     </div>
                 </main>
