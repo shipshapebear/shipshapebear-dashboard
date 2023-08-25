@@ -5,6 +5,7 @@ import { profile } from '@/drizzle/schema'
 import { eq, lt, gte, ne, sql, InferModel } from "drizzle-orm";
 import { useAuth } from '@/context/SessionProvider'
 import WelcomeCard from './welcome-card';
+import DashboardContent from './dashboard-content';
 
 export const revalidate = 0
 const getData = async () => {
@@ -31,7 +32,7 @@ const Page = async () => {
   return (
     <>
       <h1 className='mb-4 text-2xl font-bold text-foreground capitalize'>{process.env.NODE_ENV} Dashboard</h1>
-      <WelcomeCard displayName={data?.displayName} username={data?.username} avatarUrl={data?.avatarUrl} />
+      <DashboardContent data={data} />
     </>
   )
 }
