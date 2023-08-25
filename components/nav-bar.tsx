@@ -162,7 +162,7 @@ const Navbar = () => {
                 <div className='relative'>
                     <Button className='flex-none'>Create Appointment</Button>
 
-                    <div className='flex pt-3 absolute bottom-0'>
+                    <div className='flex pt-3 gap-2 absolute bottom-0'>
                         {Menu.map((val) => {
                             const isActive = pathname === val.link
                             return (
@@ -178,7 +178,7 @@ const Navbar = () => {
                                     </NavigationMenuList>
                                     {
                                         isActive && <motion.div
-                                            className="block absolute bottom-0 -z-10 bg-primary h-[2px] w-[90%] left-[5%]"
+                                            className="block absolute bottom-0 -z-10 bg-primary h-[2px] w-full"
                                             layoutId="bar"
                                             transition={{
                                                 type: 'spring',
@@ -213,7 +213,7 @@ const Navbar = () => {
                             {
                                 (pathname === "/manage-appointments" || pathname === "/manage-patients" || pathname === "/manage-dentists") &&
                                 <motion.div
-                                    className="block absolute bottom-0 -z-10 bg-primary h-[2px] w-[90%] left-[3%]"
+                                    className="block absolute bottom-0 -z-10 bg-primary h-[2px] w-full"
                                     layoutId="bar"
                                     transition={{
                                         type: 'spring',
