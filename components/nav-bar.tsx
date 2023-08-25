@@ -10,26 +10,172 @@ import UserDropdown from "@/components/user-dropdown"
 import { Menu } from "./Menu"
 import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
+import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+    navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
+
+
+const components: { title: string; href: string; description: string }[] = [
+    {
+        title: "Alert Dialog",
+        href: "/docs/primitives/alert-dialog",
+        description:
+            "A modal dialog that interrupts the user with important content and expects a response.",
+    },
+    {
+        title: "Hover Card",
+        href: "/docs/primitives/hover-card",
+        description:
+            "For sighted users to preview content available behind a link.",
+    },
+    {
+        title: "Progress",
+        href: "/docs/primitives/progress",
+        description:
+            "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+    },
+    {
+        title: "Scroll-area",
+        href: "/docs/primitives/scroll-area",
+        description: "Visually or semantically separates content.",
+    },
+    {
+        title: "Tabs",
+        href: "/docs/primitives/tabs",
+        description:
+            "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+    },
+    {
+        title: "Tooltip",
+        href: "/docs/primitives/tooltip",
+        description:
+            "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+    },
+]
+
+export function NavigationMenuDemo() {
+    return (
+        <NavigationMenu>
+            <NavigationMenuList>
+                <NavigationMenuItem>
+                    <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                        <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                            <li className="row-span-3">
+                                <NavigationMenuLink asChild>
+                                    <a
+                                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                                        href="/"
+                                    >
+                                        <Icons.logo className="h-6 w-6" />
+                                        <div className="mb-2 mt-4 text-lg font-medium">
+                                            shadcn/ui
+                                        </div>
+                                        <p className="text-sm leading-tight text-muted-foreground">
+                                            Beautifully designed components built with Radix UI and
+                                            Tailwind CSS.
+                                        </p>
+                                    </a>
+                                </NavigationMenuLink>
+                            </li>
+                            <ListItem href="/docs" title="Introduction">
+                                Re-usable components built using Radix UI and Tailwind CSS.
+                            </ListItem>
+                            <ListItem href="/docs/installation" title="Installation">
+                                How to install dependencies and structure your app.
+                            </ListItem>
+                            <ListItem href="/docs/primitives/typography" title="Typography">
+                                Styles for headings, paragraphs, lists...etc
+                            </ListItem>
+                        </ul>
+                    </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                            {components.map((component) => (
+                                <ListItem
+                                    key={component.title}
+                                    title={component.title}
+                                    href={component.href}
+                                >
+                                    {component.description}
+                                </ListItem>
+                            ))}
+                        </ul>
+                    </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <Link href="/docs" legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Documentation
+                        </NavigationMenuLink>
+                    </Link>
+
+                </NavigationMenuItem>
+            </NavigationMenuList>
+        </NavigationMenu>
+    )
+}
+
+
+const ListItem = React.forwardRef<
+    React.ElementRef<"a">,
+    React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+    return (
+        <li>
+            <NavigationMenuLink asChild>
+                <a
+                    ref={ref}
+                    className={cn(
+                        "block select-none space-y-1 px-3 py-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                        className
+                    )}
+                    {...props}
+                >
+                    <div className="text-sm font-medium leading-none">{title}</div>
+                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                        {children}
+                    </p>
+                </a>
+            </NavigationMenuLink>
+        </li>
+    )
+})
+ListItem.displayName = "ListItem"
 
 
 const Navbar = () => {
     const pathname = usePathname()
 
     return (
-        <nav className={cn("navbar relative z-10 flex h-[120px] w-full justify-end overflow-hidden border-b  border-border bg-background p-3 pb-0")}>
+        <nav className={cn("navbar relative z-10 flex h-[120px] w-full justify-end overflow-visible border-b  border-border bg-background p-3 pb-0")}>
             <div className='flex gap-2 w-full justify-between'>
                 <div className='relative'>
                     <Button className='flex-none'>Create Appointment</Button>
-                    <ul className='flex pt-3 absolute bottom-0'>
+
+                    <div className='flex pt-3 absolute bottom-0'>
                         {Menu.map((val) => {
                             const isActive = pathname === val.link
                             return (
-                                <li key={val.value} className="relative py-2" >
-                                    <Link href={val.link} className={cn("flex select-none items-center z-10 text-sm text-foreground ")}>
-                                        <div className="px-2 py-1 relative before:-z-10 before:bg-transparent before:content-[''] before:rounded-md hover:before:bg-accent before:absolute before:w-full before:h-full before:inset-0">
-                                            {val.value}
-                                        </div>
-                                    </Link>
+                                <NavigationMenu key={val.link} className='relative py-2'>
+                                    <NavigationMenuList>
+                                        <NavigationMenuItem>
+                                            <Link href={val.link} legacyBehavior passHref>
+                                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                                    {val.value}
+                                                </NavigationMenuLink>
+                                            </Link>
+                                        </NavigationMenuItem>
+                                    </NavigationMenuList>
                                     {
                                         isActive && <motion.div
                                             className="block absolute bottom-0 -z-10 bg-primary h-[2px] w-[90%] left-[5%]"
@@ -41,9 +187,43 @@ const Navbar = () => {
                                             }}
                                         />
                                     }
-                                </li>)
+                                </NavigationMenu>
+                            )
                         })}
-                    </ul>
+
+                        <NavigationMenu>
+                            <NavigationMenuList>
+                                <NavigationMenuItem >
+                                    <NavigationMenuTrigger className='h-[28px]'>Maintenance</NavigationMenuTrigger>
+                                    <NavigationMenuContent>
+                                        <ul className="flex flex-col w-[180px]">
+                                            <ListItem href="/manage-appointments" title="Manage Appointments">
+
+                                            </ListItem>
+                                            <ListItem href="/manage-patients" title="Manage Patients">
+
+                                            </ListItem>
+                                            <ListItem href="/manage-dentists" title="Manage Dentists">
+
+                                            </ListItem>
+                                        </ul>
+                                    </NavigationMenuContent>
+                                </NavigationMenuItem>
+                            </NavigationMenuList>
+                            {
+                                (pathname === "/manage-appointments" || pathname === "/manage-patients" || pathname === "/manage-dentists") &&
+                                <motion.div
+                                    className="block absolute bottom-0 -z-10 bg-primary h-[2px] w-[90%] left-[3%]"
+                                    layoutId="bar"
+                                    transition={{
+                                        type: 'spring',
+                                        stiffness: 350,
+                                        damping: 30,
+                                    }}
+                                />
+                            }
+                        </NavigationMenu>
+                    </div>
                 </div>
                 <div className='flex items-center gap-2 self-start'>
                     <Link
@@ -70,3 +250,5 @@ const Navbar = () => {
 }
 
 export default Navbar
+
+

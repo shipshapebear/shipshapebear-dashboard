@@ -58,7 +58,7 @@ export function PendingAppointments() {
                     <TableRow key={appointment.id}>
                         <TableCell className="font-medium p-2">{appointment.id}</TableCell>
                         <TableCell className="p-2">{appointment.name}</TableCell>
-                        <TableCell className="p-2"><Button size="sm" className="h-[24px]">View</Button></TableCell>
+                        <TableCell className="p-2"><Button size="sm" variant="outline" className="h-[24px]">View</Button></TableCell>
                     </TableRow>
                 ))}
             </TableBody>
