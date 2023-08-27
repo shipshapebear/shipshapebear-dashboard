@@ -42,6 +42,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
+      {/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
       <meta name="viewport" content="width=1024" />
       <body
         className={cn(
