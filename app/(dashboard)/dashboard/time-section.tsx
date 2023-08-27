@@ -19,7 +19,7 @@ const TimeSection = () => {
 
 
     return (
-        <div className='col-span-4 border border-border rounded-lg p-4'>
+        <div className='col-span-12 lg:col-span-4 border border-border rounded-lg p-4'>
             <div className='flex items-center justify-between'>
                 <div>
                     <p className='text-xl font-bold'>{formattedTime}</p>
