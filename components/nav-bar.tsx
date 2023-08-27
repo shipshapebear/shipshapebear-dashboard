@@ -1,8 +1,10 @@
 "use client"
 
 import React from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import SiteLogo from "@/assets/images/site-logo.png"
 import { motion } from "framer-motion"
 
 import { siteConfig } from "@/config/site"
@@ -60,8 +62,10 @@ const Navbar = () => {
     >
       <div className="flex gap-2 w-full justify-between">
         <div className="relative">
-          <Button className="flex-none">Create Appointment</Button>
-
+          <Link className="flex items-center gap-2" href="/">
+            <Image src={SiteLogo} alt="site logo" width={50} height={50} />
+            <p className="font-bold text-2xl">SSB Appointment System</p>
+          </Link>
           <div className="flex pt-3 gap-2 absolute bottom-0">
             {Menu.map((val) => {
               const isActive = pathname === val.link
@@ -130,20 +134,27 @@ const Navbar = () => {
             </NavigationMenu>
           </div>
         </div>
-        <div className="flex items-center gap-2 self-start">
-          <Link href={siteConfig.links.github} target="_blank" rel="noreferrer">
-            <div
-              className={buttonVariants({
-                size: "icon",
-                variant: "ghost",
-              })}
+        <div className="flex flex-col justify-between items-end">
+          <div className="flex items-center gap-2 justify-end w-full">
+            <Link
+              href={siteConfig.links.github}
+              target="_blank"
+              rel="noreferrer"
             >
-              <Icons.gitHub className="h-5 w-5" />
-              <span className="sr-only">GitHub</span>
-            </div>
-          </Link>
-          <ThemeToggle />
-          <UserDropdown />
+              <div
+                className={buttonVariants({
+                  size: "icon",
+                  variant: "ghost",
+                })}
+              >
+                <Icons.gitHub className="h-5 w-5" />
+                <span className="sr-only">GitHub</span>
+              </div>
+            </Link>
+            <ThemeToggle />
+            <UserDropdown />
+          </div>
+          <Button className="mb-2 rounded-full">Create Appointment</Button>
         </div>
       </div>
     </nav>
