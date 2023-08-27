@@ -1,10 +1,10 @@
 import React from 'react'
 import { TailwindIndicator } from "@/components/tailwind-indicator"
-import Sidebar from "@/components/side-bar"
-import Navbar from "@/components/nav-bar"
+import Navbar from "@/app/(dashboard)/nav-bar"
 import { cn } from '@/lib/utils'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase-server'
+import Footer from './footer'
 
 const Layout = async ({ children }: any) => {
 
@@ -28,6 +28,7 @@ const Layout = async ({ children }: any) => {
                         {children}
                     </div>
                 </main>
+                <Footer/>
             </div>
             <TailwindIndicator />
         </div>
