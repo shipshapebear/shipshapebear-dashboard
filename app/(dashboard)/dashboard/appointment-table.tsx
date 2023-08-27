@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge"
 import {
     Table,
     TableBody,
@@ -59,19 +60,19 @@ export function AppointmentTable() {
             <TableCaption>A list of appointments today.</TableCaption>
             <TableHeader>
                 <TableRow>
-                    <TableHead className="w-[100px]">ID</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Contact Number</TableHead>
-                    <TableHead className="text-right">Status</TableHead>
+                    <TableHead className="text-center w-[100px]">ID</TableHead>
+                    <TableHead className="text-center">Name</TableHead>
+                    <TableHead className="text-center">Contact Number</TableHead>
+                    <TableHead className="text-center">Status</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
                 {appointments.map((appointment) => (
                     <TableRow key={appointment.id}>
-                        <TableCell className="font-medium">{appointment.id}</TableCell>
-                        <TableCell>{appointment.name}</TableCell>
-                        <TableCell>{appointment.contactNumber}</TableCell>
-                        <TableCell className="text-right">{appointment.status}</TableCell>
+                        <TableCell className="text-center font-medium">{appointment.id}</TableCell>
+                        <TableCell className="text-center">{appointment.name}</TableCell>
+                        <TableCell className="text-center">{appointment.contactNumber}</TableCell>
+                        <TableCell className="text-center"><Badge variant="confirmed">{appointment.status}</Badge></TableCell>
                     </TableRow>
                 ))}
             </TableBody>
