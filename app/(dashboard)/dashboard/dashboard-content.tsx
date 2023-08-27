@@ -19,11 +19,11 @@ const DashboardContent = ({ data }: any) => {
             <TimeSection />
 
             <div className='col-span-12 lg:col-span-8 border-border border p-4 rounded-lg h-max'>
-                <h2>Appointments</h2>
+                <h2 className='font-bold'>Appointments</h2>
                 <AppointmentTable />
             </div>
             <div className='col-span-12 lg:col-span-4 border border-border rounded-lg p-4 h-max'>
-                <h2>Pending Appointments</h2>
+                <h2 className='font-bold'>Pending Appointments</h2>
                 <PendingAppointments />
             </div>
         </div>
