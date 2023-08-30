@@ -1,6 +1,8 @@
 import React from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Copy, Eye, Trash2 } from 'lucide-react'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 
 
@@ -33,13 +35,34 @@ const Appointments = () => {
                         <DataContainer key={index} label="Status" value="confirmed" />
                     </div>
 
-                    <div className='flex gap-2'>
-                        <Button size="sm" variant="destructive">Delete</Button>
-                        <Button size="sm">View</Button>
-                        <Button size="sm" variant="outline">Copy ID</Button>
-
-                    </div>
-
+                    <TooltipProvider disableHoverableContent delayDuration={300} >
+                        <div className='flex gap-2'>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button size="sm" variant="outline"><Trash2 /></Button>
+                                </TooltipTrigger>
+                                <TooltipContent side='top'>
+                                    Delete
+                                </TooltipContent>
+                            </Tooltip>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button size="sm" variant="outline"><Eye /></Button>
+                                </TooltipTrigger>
+                                <TooltipContent side='top'>
+                                    View Details
+                                </TooltipContent>
+                            </Tooltip>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button size="sm" variant="outline"><Copy /></Button>
+                                </TooltipTrigger>
+                                <TooltipContent side='top'>
+                                    Copy
+                                </TooltipContent>
+                            </Tooltip>
+                        </div>
+                    </TooltipProvider>
                 </div>
             ))}
         </div>
