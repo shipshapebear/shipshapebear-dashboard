@@ -60,7 +60,7 @@ export function Page() {
                 </CardContent>
                 <CardFooter className="w-full flex-1 flex-col justify-center gap-y-3">
                     <Button className="w-full" type="submit" onClick={() => signInWithEmail(email, password)}>Login</Button>
-                    <Button className="w-full" type="button" variant="outline" onClick={(e) => handleSignUp(e)}>Sign up</Button>
+                    {/* <Button className="w-full" type="button" variant="outline" onClick={(e) => handleSignUp(e)}>Sign up</Button> */}
                 </CardFooter>
             </Card>
         </div>
