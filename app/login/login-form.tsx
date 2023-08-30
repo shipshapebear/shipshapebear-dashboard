@@ -23,7 +23,7 @@ export function Page() {
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
 
-    const { signInWithEmail } = useAuth()
+    const { signInWithEmail, loginError } = useAuth()
 
     const handleSignUp = async (e: any) => {
         e.preventDefault()
@@ -55,6 +55,7 @@ export function Page() {
                                 <Label htmlFor="password">Password</Label>
                                 <Input id="password" type="password" placeholder="Password" onChange={(e: any) => setPassword(e.target.value)} />
                             </div>
+                            <span className="text-destructive text-sm">{loginError}</span>
                         </div>
                     </form>
                 </CardContent>

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect } from "react";
 import useSWR from "swr";
 import { useSupabase } from "./SupabaseProvider";
+import React from "react";
 
 
 interface ContextI {
@@ -12,6 +13,7 @@ interface ContextI {
     error: any;
     isLoading: boolean;
     mutate: any;
+    loginError: string,
     signOut: () => Promise<void>;
     signInWithEmail: (email: string, password: string) => Promise<string | null>;
 }
@@ -19,6 +21,7 @@ const Context = createContext<ContextI>({
     user: null,
     error: null,
     isLoading: true,
+    loginError: "",
     mutate: null,
     signOut: async () => { },
     signInWithEmail: async (email: string, password: string) => null,
@@ -33,6 +36,7 @@ export default function SupabaseAuthProvider({
 }) {
     const { supabase } = useSupabase();
     const router = useRouter();
+    const [loginError, setLoginError] = React.useState<string>("")
 
     // Get USER
     const getUser = async () => {
@@ -71,6 +75,7 @@ export default function SupabaseAuthProvider({
         router.refresh()
 
         if (error) {
+            setLoginError(error.message)
             return error.message;
         }
 
@@ -105,6 +110,7 @@ export default function SupabaseAuthProvider({
         mutate,
         signOut,
         signInWithEmail,
+        loginError
     };
 
     return <Context.Provider value={exposed}>{children}</Context.Provider>;
