@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Copy, Eye, Trash2 } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import Pagination from '@/components/ui/pagination'
 
 
 
@@ -23,7 +24,7 @@ const DataContainer = ({ label, value }: any) => {
 }
 const Appointments = () => {
     return (
-        <div className='flex flex-col gap-4 w-max'>
+        <div className='flex flex-col gap-4 w-max items-center'>
             {[1, 2, 3].map((_, index) => (
                 <div className='border border-border rounded-lg w-full p-4 flex justify-between gap-10'>
 
@@ -65,6 +66,8 @@ const Appointments = () => {
                     </TooltipProvider>
                 </div>
             ))}
+
+            <Pagination />
         </div>
     )
 }
